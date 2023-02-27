@@ -3,6 +3,10 @@ font-family: 'Arimo', sans-serif;
 font-family: 'Source Sans Pro', sans-serif; //wght@300;400
 */
 
+:root {
+  --colorPrincipal: #FFCF5A;
+  --colorSecundario: #1D5062;
+}
 
 * {
   box-sizing: border-box;
@@ -27,3 +31,10 @@ body {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+
+p {
+  color: #1D5062;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.4em;
+  margin-bottom: 1em;
+}

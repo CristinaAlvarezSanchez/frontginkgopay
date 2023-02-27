@@ -3,15 +3,11 @@ import styled from 'styled-components'
 
 import logoginkgopay from '../../logoginkgopay.svg'
 import CabeceraDeskBasic from '../ui/CabeceraDeskBasic'
+import CabeceraMovilBasic from '../ui/CabeceraMovilBasic'
+import Contenedor from '../ui/Contenedor'
 import CustomButton from '../ui/CustomButton'
 import LoginCabecera from '../ui/LoginCabecera'
 
-const DivContenedor = styled.div`
-display: flex;
-flex-direction: column;
-width: 70%;
-margin: 0 auto;
-`
 const DivCabeceraMovil = styled.div`
 margin: 6em auto 4em;
 width: 90%;
@@ -42,7 +38,6 @@ margin-top: 2em;
 flex-direction: row;
 justify-content: space-between;
 }
-
 `
 
 const Home = () => {
@@ -50,13 +45,13 @@ const Home = () => {
     return (
         <>
             <Breakpoint customQuery='(min-width:769px)'>
-                <CabeceraDeskBasic><LoginCabecera /></CabeceraDeskBasic>
+                <CabeceraDeskBasic><LoginCabecera destino={'/login'} /></CabeceraDeskBasic>
             </Breakpoint>
-            <DivContenedor>
+            <Contenedor>
                 <Breakpoint customQuery='(max-width:768px)'>
-                    <DivCabeceraMovil>
+                    <CabeceraMovilBasic>
                         <img src={logoginkgopay} alt="logo Ginkgopay" />
-                    </DivCabeceraMovil>
+                    </CabeceraMovilBasic>
                 </Breakpoint>
                 <Claim>Comparte gastos</Claim>
                 <Breakpoint customQuery='(max-width:768px)'>
@@ -68,10 +63,10 @@ const Home = () => {
                     <Parrafo>¡Prueba Gingopay hoy totalmente gratis! </Parrafo>
                 </Breakpoint>
                 <ButtonContenedor>
-                    <CustomButton color='dark'>Acceder</CustomButton>
-                    <CustomButton color='ligth'>Crear una cuenta</CustomButton>
+                    <CustomButton color='dark' destino={'/login'}>Acceder</CustomButton>
+                    <CustomButton color='ligth' destino={'/registro'}>Crear una cuenta</CustomButton>
                 </ButtonContenedor>
-            </DivContenedor>
+            </Contenedor>
         </>
     )
 

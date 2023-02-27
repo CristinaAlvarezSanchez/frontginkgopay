@@ -1,0 +1,85 @@
+/* form div {
+    display: flex;
+    flex-direction: column;
+}
+ */
+label {
+    font-family: 'Arimo', sans-serif;
+    font-size: 1.3em;
+    color: #1D5062;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+label:first-child {
+    margin-top: 0;
+}
+
+input {
+    width: 100%;
+    height: 3em;
+    background-color: white;
+    border-radius: 50px;
+    border: 0;
+    padding: 1em;
+    margin: 1em 0;
+    font-family: 'Arimo', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+input:focus {
+    background-color: #F6DFA7;
+    border: 1px solid #1D5062;
+    outline: none;
+}
+
+form button {
+    background-color: #1D5062;
+    color: white;
+    border-radius: 50px;
+    border: none;
+    padding: 0.8rem 2rem;
+    margin-top: 1.5em;
+    margin-bottom: 4em;
+    font-size: 1.3em;
+    font-family: 'Arimo', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    width: 70%;
+
+}
+
+form button:hover {
+    color: white;
+    background-color: #307A94;
+}
+
+
+.ContainerForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.CenterItems {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.TextoError {
+    font-size: 1.2em;
+    color: rgb(200, 23, 23);
+}
+
+.LabelError {
+    border: 1px solid rgb(200, 23, 23);
+    background-color: rgb(247, 162, 162);
+}
+
+@media (min-width: 769px) {
+    form button {
+        width: 45%;
+        font-size: 1.3em;
+    }
+}
