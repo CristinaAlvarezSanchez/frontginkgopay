@@ -72,6 +72,12 @@ form button:hover {
     color: rgb(200, 23, 23);
 }
 
+.TextoErrorBack {
+    font-size: 1.5em;
+    color: rgb(200, 23, 23);
+    text-align: center;
+}
+
 .LabelError {
     border: 1px solid rgb(200, 23, 23);
     background-color: rgb(247, 162, 162);

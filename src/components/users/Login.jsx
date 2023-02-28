@@ -2,6 +2,8 @@ import classes from '../ui/Form.module.css'
 import { useNavigate } from "react-router-dom"
 import { Breakpoint } from "react-socks"
 import { useForm } from "react-hook-form"
+import axios from 'axios'
+import { useState } from 'react'
 
 import CabeceraDeskBasic from "../ui/CabeceraDeskBasic"
 import logoginkgopay from '../../logoginkgopay.svg'
@@ -9,15 +11,23 @@ import Contenedor from '../ui/Contenedor'
 import CabeceraMovilBasic from '../ui/CabeceraMovilBasic'
 import CustomButton from '../ui/CustomButton'
 
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const Login = () => {
 
     const navigate = useNavigate()
-    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const onSubmit = (values) => {
-        console.log(values)
-        reset()
+    const [errorRes, setErrorRes] = useState('')
+
+    const onSubmit = async (values) => {
+        const res = await axios.post(`${baseUrl}/users/login`, values)
+        if (res.data.fatal) {
+            setErrorRes(res.data.fatal)
+        } else {
+            setErrorRes('')
+            navigate('/mis-grupos')
+        }
     }
 
     const classError = (error) => {
@@ -57,6 +67,7 @@ const Login = () => {
                             })} />
                         {(errors.password?.type === 'required') && <p className={classes.TextoError}>Debes incluir una contraseña para acceder</p>}
 
+                        {errorRes && <p className={classes.TextoErrorBack}> El correo electrónico y/o contraseña introducido no es válido </p>}
                         <div className={classes.CenterItems}>
                             <button type="submit">Enviar</button>
                         </div>
@@ -70,9 +81,7 @@ const Login = () => {
 
             </Contenedor>
         </>
-
     )
-
 }
 
 export default Login

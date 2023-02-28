@@ -2,6 +2,8 @@ import classes from '../ui/Form.module.css'
 import { useNavigate } from "react-router-dom"
 import { Breakpoint } from "react-socks"
 import { useForm } from "react-hook-form"
+import axios from 'axios'
+import { useState } from 'react'
 
 import logoginkgopay from '../../logoginkgopay.svg'
 import CabeceraDeskBasic from "../ui/CabeceraDeskBasic"
@@ -10,14 +12,25 @@ import Contenedor from "../ui/Contenedor"
 import LoginCabecera from "../ui/LoginCabecera"
 import CustomButton from '../ui/CustomButton'
 
+
+const baseUrl = process.env.REACT_APP_API_BASE_URL
+
 const Registro = () => {
 
     const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
-    const onSubmit = (values) => {
-        console.log(values)
-        reset()
+    const [errorRes, setErrorRes] = useState('')
+
+    const onSubmit = async (values) => {
+        const res = await axios.post(`${baseUrl}/users/register`, values)
+
+        if (res.data.fatal) {
+            setErrorRes(res.data.fatal)
+        } else {
+            setErrorRes('')
+            navigate('/login')
+        }
     }
 
     const classError = (error) => {
@@ -62,6 +75,7 @@ const Registro = () => {
                                 required: true,
                                 maxLength: 15
                             })} />
+                        {(errorRes.includes('usuarios.alias')) && <p className={classes.TextoErrorBack}> Este alias ya existe por favor elige uno distinto</p>}
                         {(errors.alias?.type === 'required') && <p className={classes.TextoError}>Debes incluir un alias para darte de alta</p>}
                         {(errors.alias?.type === 'maxLength') && <p className={classes.TextoError}>El alias debe tener como máximo 15 caracteres</p>}
 
@@ -72,6 +86,7 @@ const Registro = () => {
                                 required: true,
                                 pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
                             })} />
+                        {(errorRes.includes('usuarios.email')) && <p className={classes.TextoErrorBack}> Este correo electrónico ya está registrado por favor elige uno distinto</p>}
                         {(errors.email?.type === 'required') && <p className={classes.TextoError}>Debes incluir un correo electrónico para darte de alta</p>}
                         {(errors.email?.type === 'pattern') && <p className={classes.TextoError}>Debes introducir un correo electrónico válido</p>}
 
