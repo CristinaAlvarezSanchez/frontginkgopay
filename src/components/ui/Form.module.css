@@ -61,6 +61,19 @@ form button:hover {
     flex-direction: column;
 }
 
+.ButtonNoMargin{
+    background-color: #1D5062;
+    color: white;
+    border-radius: 50px;
+    border: none;
+    padding: 0.8rem;
+    font-size: 1.2em;
+    font-family: 'Arimo', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+
+}
 .CenterItems {
     display: flex;
     flex-direction: column;

@@ -3,7 +3,7 @@ import logoginkgopay from '../../logoginkgopay.svg'
 import { useNavigate } from "react-router-dom"
 
 const DivCabeceraDesktop = styled.div`
-    margin: 2em 0 6em ;
+    margin: 2em 0 2em ;
     display: flex;
     justify-content: space-between;
 `

@@ -6,7 +6,7 @@ flex-direction: column;
 width: 90%;
 margin: 0 auto;
 @media (min-width: 769px){
-width: 70%;
+width: 80%;
 }
 `
 const Contenedor = ({ children }) => {

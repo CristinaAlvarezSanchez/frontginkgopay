@@ -1,0 +1,33 @@
+.indeterminateProgressBar {
+    background-color: #d1d5db;
+    border-radius: 9999px;
+    height: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    margin-top: 3em;
+    margin-bottom: 1em;
+
+}
+
+.indeterminateProgressBarProgress {
+    background-color: #3b82f6;
+    border-radius: 9999px;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    width: 50%;
+
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: indeterminateProgressBar;
+}
+
+@keyframes indeterminateProgressBar {
+    from {
+        left: -50%;
+    }
+
+    to {
+        left: 100%;
+    }
+}

@@ -19,10 +19,9 @@ cursor: pointer;
     }
 @media (min-width: 769px) {
     width: 45%;
-    font-size: 1.3em;
 }
 `
-const CustomButton = ({ children, color, destino, type }) => {
+const CustomButton = ({ children, color, destino}) => {
 
     const navigate = useNavigate()
 

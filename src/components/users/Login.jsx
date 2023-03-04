@@ -10,6 +10,7 @@ import logoginkgopay from '../../logoginkgopay.svg'
 import Contenedor from '../ui/Contenedor'
 import CabeceraMovilBasic from '../ui/CabeceraMovilBasic'
 import CustomButton from '../ui/CustomButton'
+import { useLocalStorage } from 'react-use'
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
@@ -18,6 +19,7 @@ const Login = () => {
     const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm()
 
+    const [token, setToken] = useLocalStorage('token')
     const [errorRes, setErrorRes] = useState('')
 
     const onSubmit = async (values) => {
@@ -26,7 +28,9 @@ const Login = () => {
             setErrorRes(res.data.fatal)
         } else {
             setErrorRes('')
-            navigate('/mis-grupos')
+            setToken(res.data.token)
+            console.log(res.data.token)
+            navigate('/grupos')
         }
     }
 
