@@ -119,7 +119,12 @@ const DivConfEliminar = styled.div`
     margin-top: 1em;  
     text-align: center;
     `
-
+const Aviso = styled.p`
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    font-size: 1em; 
+    color:#1D5062;
+`
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
@@ -147,6 +152,7 @@ const EditarGrupo = () => {
             const grupoRes = await axios.get(`${baseUrl}/groups/${idGrupo}`)
             setGrupo(grupoRes.data)
             setNombreGrupo(grupoRes.data.nombre)
+
             const participantesRes = await axios.get(`${baseUrl}/users/group/${idGrupo}`)
             setArrParticipantes(participantesRes.data)
             setAdmin(participantesRes.data.filter((participante => participante.tipo_usuario === 'administrador'))[0])
@@ -263,6 +269,7 @@ const EditarGrupo = () => {
                                     onAddUsuario={addParticipanteNew} />
                             ))
                         }
+                        {stringBus && <Aviso>*Recuerda que si ya tienes gastos creados para el grupo los nuevos participantes no se asginarán a los gastos antiguos.</Aviso>}
 
                         <TituloCambioNombre>Editar el nombre del grupo</TituloCambioNombre>
                         <form onSubmit={handleSubmit(onSubmit)}>

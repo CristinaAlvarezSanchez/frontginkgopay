@@ -160,7 +160,7 @@ const FichaGrupo = () => {
             let totalPagos = 0
             gastos.filter(pago => pago.pagador_id === participante.id).forEach(pago => totalPagos += parseFloat(pago.cantidad))
             let totalGastos = 0
-            reparto.filter(gasto => gasto.id === participante.id).forEach(gasto => totalGastos += parseFloat(gasto.cantidad) * parseFloat(gasto.participacion))
+            reparto.filter(gasto => gasto.usuario_id === participante.id).forEach(gasto => totalGastos += parseFloat(gasto.cantidad) * parseFloat(gasto.participacion))
             let saldo = totalPagos - totalGastos
             saldosGrupo.push({ id: participante.id, alias: participante.alias, saldo: saldo })
         })
@@ -190,7 +190,7 @@ const FichaGrupo = () => {
         <>
 
             {
-                participantes.length === 0 ? <ProgressBar/> :
+                participantes.length === 0 ? <ProgressBar /> :
                     (participantes.findIndex((participante) => participante.id === user_id)) !== - 1
                         ?
                         <>

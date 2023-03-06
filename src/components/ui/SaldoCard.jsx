@@ -24,7 +24,7 @@ const TextoCantidad = styled.p`
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 600;
     font-size: 1.5em;
-    color: ${props => props.saldo > 0 ? 'green': 'red'};
+    color: ${props => props.saldo >= 0 ? 'green' : 'red'};
     margin: 5px;
 `
 const SaldoCard = ({ alias, saldo }) => {

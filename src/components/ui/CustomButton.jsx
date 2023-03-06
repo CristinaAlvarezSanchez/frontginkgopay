@@ -7,7 +7,7 @@ color: ${props => props.color === 'dark' ? 'white' : '#1D5062'} ;
 border-radius: 50px;
 border: none;
 padding: 0.8rem 2rem;
-margin: 0.5em 0 0.5em;
+margin: 1.5em 0 1em;
 font-size: 1.3em;
 font-family: 'Arimo', sans-serif;
 text-decoration: none;

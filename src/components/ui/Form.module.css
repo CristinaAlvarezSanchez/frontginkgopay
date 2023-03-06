@@ -28,6 +28,19 @@ input {
     cursor: pointer;
 }
 
+select {
+    width: 100%;
+    height: 3em;
+    background-color: white;
+    border-radius: 50px;
+    border: 0;
+    padding: 0.8em;
+    margin: 1em 0;
+    font-family: 'Arimo', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+}
+
 input:focus {
     background-color: #F6DFA7;
     border: 1px solid #1D5062;
@@ -39,8 +52,8 @@ form button {
     color: white;
     border-radius: 50px;
     border: none;
-    padding: 0.8rem 2rem;
-    margin-top: 1.5em;
+    padding: 0.8em ;
+    margin-top: 1em;
     margin-bottom: 4em;
     font-size: 1.3em;
     font-family: 'Arimo', sans-serif;
@@ -61,7 +74,7 @@ form button:hover {
     flex-direction: column;
 }
 
-.ButtonNoMargin{
+.ButtonNoMargin {
     background-color: #1D5062;
     color: white;
     border-radius: 50px;
@@ -74,6 +87,7 @@ form button:hover {
     margin: 0;
 
 }
+
 .CenterItems {
     display: flex;
     flex-direction: column;
@@ -96,9 +110,115 @@ form button:hover {
     background-color: rgb(247, 162, 162);
 }
 
+.Oculto {
+    display: none;
+}
+
+.InputEdit {
+    background-color: #F6DFA7;
+    color: #1D5062;
+    border-radius: 0;
+    font-family: 'Arimo', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0;
+    width: 70%;
+}
+
+.InputEdit:disabled {
+    background-color: #FFCF5A;
+    color: #1D5062;
+    font-family: 'Arimo', sans-serif;
+    font-size: 1em;
+    cursor: none;
+    margin: 0;
+    width: 70%;
+}
+
+.ContainerInputEdit {
+    background-color: #FFCF5A;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 1.5em 0;
+    border-bottom: 1px solid #F6DFA7;
+    gap: 0.5em
+}
+
+.ContainerInput {
+    background-color: #FFCF5A;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+
+}
+
+.DivEdit {
+    width: 1.7em;
+    height: 1.7em;
+    background-image: url('../../icons/inputedit.png');
+    background-size: cover;
+    cursor: pointer;
+    margin-right: 1em;
+}
+
+.DivEdit:hover {
+    background-image: url('../../icons/inputedithover.png');
+}
+
+.LabelEdit {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1em;
+    color: #1D5062;
+    text-align: right;
+    margin-right: 1em;
+}
+
+.ContainerButtonEdit{
+    height: 2em;
+}
+.ButtonEdit {
+    width: 10em;
+    cursor: pointer;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1em; 
+    font-weight:800;
+    color: white;
+    background-color: #CD5220;
+    text-align: center;
+    cursor: pointer;
+    margin: 0;
+    padding: 0.3em;
+
+}
+
+.ButtonEdit:hover {
+    color: #1D5062;
+    background-color: #F6DFA7;
+}
+
+
 @media (min-width: 769px) {
     form button {
         width: 45%;
         font-size: 1.3em;
+    }
+
+    .ContainerInputEdit {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0em;
+        align-items: baseline;
+    }
+
+    .ContainerInput {
+        width: 80%;
+        align-items: baseline;
     }
 }

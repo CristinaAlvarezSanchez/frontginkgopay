@@ -10,6 +10,7 @@ import NuevoGrupo from './components/grupos/NuevoGrupo';
 import EditarGrupo from './components/grupos/EditarGrupo';
 import NuevoGasto from './components/gastos/NuevoGasto';
 import EditarGasto from './components/gastos/EditarGasto';
+import RepartirGasto from './components/gastos/RepartirGasto';
 
 
 
@@ -24,10 +25,12 @@ function App() {
             <Route path='registro' element={<Registro />} />
             <Route path='grupos' element={<MisGrupos />} />
             <Route path='grupos/:idGrupo' element={<FichaGrupo />} />
-           
+
             <Route path='grupos/nuevogrupo' element={<NuevoGrupo />} />
             <Route path='grupos/nuevogrupo/participantes/:idGrupo' element={<EditarGrupo />} />
             <Route path='gastos/nuevogasto/:idGrupo' element={<NuevoGasto />} />
+            <Route path='gastos/nuevogasto/:idGasto/repartir/:idGrupo/:idCreador' element={<RepartirGasto />} />
+            <Route path='gastos/editargasto/:idGasto/repartir/:idGrupo' element={<RepartirGasto />} />
             <Route path='gastos/editargasto/:idGasto' element={<EditarGasto />} />
           </Routes>
         </div>
