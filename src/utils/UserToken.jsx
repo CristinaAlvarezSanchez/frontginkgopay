@@ -1,10 +1,13 @@
 import jwtDecode from "jwt-decode"
 import { useLocalStorage } from "react-use"
 
-const UserGuard = () => {
+const UserToken = () => {
     const [token] = useLocalStorage('token')
-    const decodeToken = jwtDecode(token)
-    return decodeToken
+    if (token) {
+        const decodeToken = jwtDecode(token)
+        return decodeToken
+    }
+    else { return {} }
 }
 
-export default UserGuard
+export default UserToken

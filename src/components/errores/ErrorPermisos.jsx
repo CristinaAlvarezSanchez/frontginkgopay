@@ -14,6 +14,7 @@ margin: 2em;
 const ErrorPermisos =()=>{
 
     return(
+        
         <DivCenterItems><DivImagenError> </DivImagenError>
         <p>No tienes permisos para acceder aquí</p></DivCenterItems>
         

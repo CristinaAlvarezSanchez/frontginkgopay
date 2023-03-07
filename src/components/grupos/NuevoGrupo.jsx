@@ -2,15 +2,11 @@ import classes from '../ui/Form.module.css'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
-import { Breakpoint } from "react-socks"
 import { useState } from 'react'
 import UserToken from "../../utils/UserToken"
 
-import logoginkgopay from '../../logoginkgopay.svg'
-import CabeceraDeskBasic from "../ui/CabeceraDeskBasic"
-import CabeceraMovilBasic from "../ui/CabeceraMovilBasic"
-import Contenedor from "../ui/Contenedor"
 import CustomButton from '../ui/CustomButton'
+import ContenedorOnLogin from '../ui/CabeceraContenedor/ContenedorOnLogin'
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
@@ -37,15 +33,8 @@ const NuevoGrupo = () => {
     }
     return (
         <>
-            <Breakpoint customQuery='(min-width:769px)'>
-                <CabeceraDeskBasic></CabeceraDeskBasic>
-            </Breakpoint>
-            <Contenedor>
-                <Breakpoint customQuery='(max-width:768px)'>
-                    <CabeceraMovilBasic>
-                        <img src={logoginkgopay} alt="logo Ginkgopay" />
-                    </CabeceraMovilBasic>
-                </Breakpoint>
+        
+            <ContenedorOnLogin>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={classes.ContainerForm}>
                         <label>NOMBRE DEL GRUPO</label>
@@ -67,7 +56,7 @@ const NuevoGrupo = () => {
                     <p> ¿Quieres ver todos tus grupos? </p>
                     <CustomButton color='ligth' destino={'/grupos'}> Ver mis grupos</CustomButton>
                 </div>
-            </Contenedor>
+            </ContenedorOnLogin>
         </>
     )
 

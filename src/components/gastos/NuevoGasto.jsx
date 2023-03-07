@@ -1,17 +1,13 @@
 import classes from '../ui/Form.module.css'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from "react-router-dom"
-import { Breakpoint } from "react-socks"
-import CabeceraDeskBasic from "../ui/CabeceraDeskBasic"
-import logoginkgopay from '../../logoginkgopay.svg'
-import CabeceraMovilBasic from "../ui/CabeceraMovilBasic"
-import Contenedor from "../ui/Contenedor"
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import UserToken from "../../utils/UserToken"
 import ProgressBar from '../errores/ProgressBar/ProgressBar'
 import NavButton from '../ui/NavButton'
 import ErrorPermisos from '../errores/ErrorPermisos'
+import ContenedorOnLogin from '../ui/CabeceraContenedor/ContenedorOnLogin'
 
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
@@ -73,15 +69,7 @@ console.log(user_id)
         <>
             {!participantes ? <ProgressBar /> :
                 permisos ? <>
-                    <Breakpoint customQuery='(min-width:769px)'>
-                        <CabeceraDeskBasic></CabeceraDeskBasic>
-                    </Breakpoint>
-                    <Contenedor>
-                        <Breakpoint customQuery='(max-width:768px)'>
-                            <CabeceraMovilBasic>
-                                <img src={logoginkgopay} alt="logo Ginkgopay" />
-                            </CabeceraMovilBasic>
-                        </Breakpoint>
+                    <ContenedorOnLogin>
                         <NavButton texto='Volver al grupo' destino={`/grupos/${idGrupo}`} />
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className={classes.ContainerForm}>
@@ -136,7 +124,7 @@ console.log(user_id)
                                 </div>
                             </div>
                         </form>
-                    </Contenedor>
+                    </ContenedorOnLogin>
 
                 </>
                     :

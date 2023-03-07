@@ -5,12 +5,9 @@ import { useForm } from "react-hook-form"
 import axios from 'axios'
 import { useState } from 'react'
 
-import logoginkgopay from '../../logoginkgopay.svg'
-import CabeceraDeskBasic from "../ui/CabeceraDeskBasic"
-import CabeceraMovilBasic from "../ui/CabeceraMovilBasic"
-import Contenedor from "../ui/Contenedor"
-import LoginCabecera from "../ui/LoginCabecera"
+
 import CustomButton from '../ui/CustomButton'
+import ContenedorNoLogin from '../ui/CabeceraContenedor/ContenedorNoLogin'
 
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
@@ -41,15 +38,7 @@ const Registro = () => {
 
     return (
         <>
-            <Breakpoint customQuery='(min-width:769px)'>
-                <CabeceraDeskBasic><LoginCabecera destino={'/login'} /></CabeceraDeskBasic>
-            </Breakpoint>
-            <Contenedor>
-                <Breakpoint customQuery='(max-width:768px)'>
-                    <CabeceraMovilBasic>
-                        <img onClick={() => navigate('/')} src={logoginkgopay} alt="logo Ginkgopay" />
-                    </CabeceraMovilBasic>
-                </Breakpoint>
+            <ContenedorNoLogin>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={classes.ContainerForm}>
                         <label>NOMBRE</label>
@@ -109,7 +98,7 @@ const Registro = () => {
                         <CustomButton color='ligth' destino={'/login'}> Accede aquí</CustomButton>
                     </div>
                 </Breakpoint>
-            </Contenedor>
+            </ContenedorNoLogin>
         </>
     )
 }

@@ -1,46 +1,45 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Breakpoint } from "react-socks"
 import styled from "styled-components"
 import UserToken from "../../utils/UserToken"
 
-import CabeceraDeskBasic from "../ui/CabeceraDeskBasic"
-import CabeceraMovilBasic from "../ui/CabeceraMovilBasic"
 
 import GrupoCard from "../ui/GrupoCard"
-import logoginkgopay from '../../logoginkgopay.svg'
 import mas from '../../icons/mas.png'
 import mashover from '../../icons/mashover.png'
 import CustomButton from "../ui/CustomButton"
 import DivCenterItems from "../ui/DivCenterItems"
-import Contenedor from "../ui/Contenedor"
+import NavButton from "../ui/NavButton"
+import ErrorPermisos from "../errores/ErrorPermisos"
+import ProgressBar from "../errores/ProgressBar/ProgressBar"
+import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 
 
 const DivTipoGrupo = styled.div`
     display: flex;
     justify-content: space-between;
+    border-radius: 15px;
     align-items: center;
     width: 100%;
-    padding-left:3.2em;
-    padding-right:3.2em;
-    background-color: #1D5062;
+    padding:1.2em;
+    background-color: #F6DFA7;
     margin-top: 70px;
+    margin-bottom: 1em;
     :first-child{
         margin-top: 0;
     }
 `
 const Titulo = styled.p`
-    margin-top: 1.2em;
-    margin-bottom:1.2em;
-    color: white;
+    color: #1D5062;
     font-family: 'Arimo', sans-serif;
     font-size: 1.5em;
     text-align: center;
 `
 const DivIconoNuevo = styled.div`
-    width: 2em;
-    height: 2em;
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 0.5em;
     background-image: url(${mas});
     background-size: cover;
     cursor: pointer;
@@ -59,56 +58,59 @@ const MisGrupos = () => {
     const navigate = useNavigate()
     const { user_id } = UserToken()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await axios.get(`${baseUrl}/groups/user/${user_id}`)
-            setArrGrupos(res.data)
-        }
-        fetchData()
-    }, [])
 
+    useEffect(() => {
+        if (user_id) {
+            const fetchData = async () => {
+                const res = await axios.get(`${baseUrl}/groups/user/${user_id}`)
+                setArrGrupos(res.data)
+            }
+            fetchData()
+        }
+    }, [])
 
     return (
         <>
-            <Breakpoint customQuery='(min-width:769px)'>
-                <CabeceraDeskBasic></CabeceraDeskBasic>
-            </Breakpoint>
-            <Contenedor>
-                <Breakpoint customQuery='(max-width:768px)'>
-                    <CabeceraMovilBasic>
-                        <img src={logoginkgopay} alt="logo Ginkgopay" />
-                    </CabeceraMovilBasic>
-                </Breakpoint>
-
-                {((arrGrupos.filter(grupo => grupo.tipo_usuario === 'administrador')).length !== 0) &&
-                    <DivTipoGrupo>
-                        <Titulo>MIS GRUPOS</Titulo>
-                        <DivIconoNuevo onClick={() => { navigate('/grupos/nuevogrupo') }} />
-                    </DivTipoGrupo>
-                }
-                {(arrGrupos.filter(grupo => grupo.tipo_usuario === 'administrador')).map(grupo => (
-                    <GrupoCard key={grupo.id} {...grupo} />
-                ))}
+            {user_id ?
+                <>
+                    <ContenedorOnLogin>
+                        {((arrGrupos.filter(grupo => grupo.tipo_usuario === 'administrador')).length !== 0) &&
+                            <DivTipoGrupo>
+                                <Titulo>MIS GRUPOS</Titulo>
+                                <DivIconoNuevo onClick={() => { navigate('/grupos/nuevogrupo') }} />
+                            </DivTipoGrupo>
+                        }
+                        {(arrGrupos.filter(grupo => grupo.tipo_usuario === 'administrador')).map(grupo => (
+                            <GrupoCard key={grupo.id} {...grupo} />
+                        ))}
 
 
-                {((arrGrupos.filter(grupo => grupo.tipo_usuario === 'miembro' && grupo.autorizado)).length !== 0) &&
-                    <DivTipoGrupo>
-                        <Titulo>GRUPOS COMPARTIDOS CONMIGO</Titulo>
-                    </DivTipoGrupo>
-                }
-                {(arrGrupos.filter(grupo => grupo.tipo_usuario === 'miembro' && grupo.autorizado)).map(grupo => (
-                    <GrupoCard key={grupo.id} {...grupo} />
-                ))}
-                {(arrGrupos.filter(grupo => grupo.tipo_usuario === 'miembro' && !grupo.autorizado)).map(grupo => (
-                    <GrupoCard key={grupo.id} {...grupo} />
-                ))}
+                        {((arrGrupos.filter(grupo => grupo.tipo_usuario === 'miembro' && grupo.autorizado)).length !== 0) &&
+                            <DivTipoGrupo>
+                                <Titulo>GRUPOS COMPARTIDOS CONMIGO</Titulo>
+                            </DivTipoGrupo>
+                        }
+                        {(arrGrupos.filter(grupo => grupo.tipo_usuario === 'miembro' && grupo.autorizado)).map(grupo => (
+                            <GrupoCard key={grupo.id} {...grupo} />
+                        ))}
+                        {(arrGrupos.filter(grupo => grupo.tipo_usuario === 'miembro' && !grupo.autorizado)).map(grupo => (
+                            <GrupoCard key={grupo.id} {...grupo} />
+                        ))}
 
-                <DivCenterItems>
-                    {(arrGrupos.length === 0) && <p>Crea un grupo para poder empezar a compartir gastos</p>}
-                    <CustomButton color='dark' destino={'/grupos/nuevogrupo'} > Crear nuevo grupo</CustomButton>
-                </DivCenterItems>
+                        <DivCenterItems>
+                            {(arrGrupos.length === 0) && <p>Crea un grupo para poder empezar a compartir gastos</p>}
+                            <CustomButton color='dark' destino={'/grupos/nuevogrupo'} > Crear nuevo grupo</CustomButton>
+                        </DivCenterItems>
 
-            </Contenedor>
+                    </ContenedorOnLogin>
+                </>
+                :
+                <>
+                    <NavButton texto='Login' destino={'/login'} />
+                    <ErrorPermisos />
+                </>
+            }
+
         </>
     )
 }

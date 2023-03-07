@@ -7,16 +7,12 @@ import { useForm } from "react-hook-form"
 import UserToken from "../../utils/UserToken"
 import DivCenterItems from '../ui/DivCenterItems'
 import DivRigthItems from '../ui/DivRigthItems'
-import CabeceraDeskBasic from '../ui/CabeceraDeskBasic'
-import Contenedor from '../ui/Contenedor'
 import CustomButton from '../ui/CustomButton'
-import CabeceraMovilBasic from '../ui/CabeceraMovilBasic'
-import logoginkgopay from '../../logoginkgopay.svg'
-import { Breakpoint } from 'react-socks'
 import NavButton from '../ui/NavButton'
 import styled from 'styled-components'
 import ProgressBar from '../errores/ProgressBar/ProgressBar'
 import ErrorPermisos from '../errores/ErrorPermisos'
+import ContenedorOnLogin from '../ui/CabeceraContenedor/ContenedorOnLogin'
 
 const ButtonEliminar = styled.div`
     background-color: #CD5220;
@@ -103,7 +99,6 @@ const EditarGasto = () => {
         const res = await axios.delete(`${baseUrl}/expenses/delete/${idGasto}`)
         if (res.data.fatal) {
             setErrorRes('no se ha podido eliminar el grupo')
-            console.log(res.data)
         } else {
             navigate(`/grupos/${gasto.grupo_gasto_id}`)
 
@@ -115,15 +110,7 @@ const EditarGasto = () => {
             {!gasto ? <ProgressBar /> :
                 (user_id === admin.id || user_id === gasto.pagador_id) ? <>
 
-                    <Breakpoint customQuery='(min-width:769px)'>
-                        <CabeceraDeskBasic></CabeceraDeskBasic>
-                    </Breakpoint>
-                    <Contenedor>
-                        <Breakpoint customQuery='(max-width:768px)'>
-                            <CabeceraMovilBasic>
-                                <img src={logoginkgopay} alt="logo Ginkgopay" />
-                            </CabeceraMovilBasic>
-                        </Breakpoint>
+                    <ContenedorOnLogin>
                         <NavButton texto='Volver al grupo' destino={`/grupos/${gasto.grupo_gasto_id}`} />
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className={classes.ContainerInputEdit}>
@@ -177,7 +164,7 @@ const EditarGasto = () => {
                                     <ButtonEliminar onClick={() => { onEliminar() }}> Eliminar definitivamente </ButtonEliminar>
                                 </DivCenterItems>
                             </DivConfEliminar>}
-                    </Contenedor>
+                    </ContenedorOnLogin>
                 </>
                     :
                     <>

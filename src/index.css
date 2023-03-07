@@ -1,12 +1,10 @@
 /* 
 font-family: 'Arimo', sans-serif;
 font-family: 'Source Sans Pro', sans-serif; //wght@300;400
+ --colorPrincipal: #FFCF5A;
+  --colorSecundario: #1D5062;
 */
 
-:root {
-  --colorPrincipal: #FFCF5A;
-  --colorSecundario: #1D5062;
-}
 
 * {
   box-sizing: border-box;
@@ -22,18 +20,26 @@ body {
   background-color: #FFCF5A;
   margin: 0;
   font-family: 'Source Sans Pro', sans-serif;
+  min-height: 100vh;
+  max-width: 70.50rem;
+  margin: 0 auto;
+  padding: 1rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
-
 p {
   color: #1D5062;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 1.4em;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+footer{
+  width: 100%;
 }

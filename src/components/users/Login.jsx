@@ -1,16 +1,13 @@
 import classes from '../ui/Form.module.css'
 import { useNavigate } from "react-router-dom"
-import { Breakpoint } from "react-socks"
+
 import { useForm } from "react-hook-form"
 import axios from 'axios'
 import { useState } from 'react'
 
-import CabeceraDeskBasic from "../ui/CabeceraDeskBasic"
-import logoginkgopay from '../../logoginkgopay.svg'
-import Contenedor from '../ui/Contenedor'
-import CabeceraMovilBasic from '../ui/CabeceraMovilBasic'
 import CustomButton from '../ui/CustomButton'
 import { useLocalStorage } from 'react-use'
+import ContenedorNoLogin from '../ui/CabeceraContenedor/ContenedorNoLogin'
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
@@ -42,17 +39,7 @@ const Login = () => {
 
     return (
         <>
-            <Breakpoint customQuery='(min-width:769px)'>
-                <CabeceraDeskBasic></CabeceraDeskBasic>
-            </Breakpoint>
-            <Contenedor>
-                <Breakpoint customQuery='(max-width:768px)'>
-                    <CabeceraMovilBasic>
-                        <div>
-                            <img onClick={() => navigate('/')} src={logoginkgopay} alt="logo Ginkgopay" />
-                        </div>
-                    </CabeceraMovilBasic>
-                </Breakpoint>
+            <ContenedorNoLogin>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={classes.ContainerForm}>
                         <label> CORREO ELECTRÓNICO</label>
@@ -83,7 +70,7 @@ const Login = () => {
                     <CustomButton color='ligth' destino={'/registro'}> Crear una cuenta</CustomButton>
                 </div>
 
-            </Contenedor>
+            </ContenedorNoLogin>
         </>
     )
 }

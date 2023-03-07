@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import Login from '../../icons/login.svg'
+import Login from '../../../icons/login.svg'
 
 const DivContainer = styled.div`
 display: flex;

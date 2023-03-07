@@ -8,17 +8,13 @@ import UserToken from "../../utils/UserToken"
 import editpuntos from '../../icons/editpuntos.png'
 import editpuntoshover from '../../icons/editpuntoshover.png'
 import backgroundgrupo from '../../images/backgroundgrupo.png'
-import logoginkgopay from '../../logoginkgopay.svg'
-import { Breakpoint } from "react-socks"
-import CabeceraDeskBasic from "../ui/CabeceraDeskBasic"
-import CabeceraMovilBasic from "../ui/CabeceraMovilBasic"
-import Contenedor from "../ui/Contenedor"
 import CustomButton from "../ui/CustomButton"
 import DivCenterItems from "../ui/DivCenterItems"
 import SaldoCard from "../ui/SaldoCard"
 import NavButton from "../ui/NavButton"
 import ErrorPermisos from "../errores/ErrorPermisos"
 import ProgressBar from "../errores/ProgressBar/ProgressBar"
+import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 
 const InfoDiv = styled.div`
     display: flex;
@@ -194,15 +190,7 @@ const FichaGrupo = () => {
                     (participantes.findIndex((participante) => participante.id === user_id)) !== - 1
                         ?
                         <>
-                            <Breakpoint customQuery='(min-width:769px)'>
-                                <CabeceraDeskBasic></CabeceraDeskBasic>
-                            </Breakpoint>
-                            <Contenedor>
-                                <Breakpoint customQuery='(max-width:768px)'>
-                                    <CabeceraMovilBasic>
-                                        <img src={logoginkgopay} alt="logo Ginkgopay" />
-                                    </CabeceraMovilBasic>
-                                </Breakpoint>
+                            <ContenedorOnLogin>
                                 <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
                                 <InfoDiv>
                                     {user_id === admin.id &&
@@ -236,8 +224,7 @@ const FichaGrupo = () => {
                                 <DivCenterItems>
                                     <CustomButton color="dark" destino={`/gastos/nuevogasto/${idGrupo}`}> Añadir gasto</CustomButton>
                                 </DivCenterItems>
-
-                            </Contenedor>
+                                </ContenedorOnLogin>
                         </>
                         :
                         <>

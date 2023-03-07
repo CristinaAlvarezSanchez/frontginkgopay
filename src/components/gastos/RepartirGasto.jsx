@@ -3,19 +3,14 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import UserToken from "../../utils/UserToken"
-import { Breakpoint } from 'react-socks'
-import CabeceraDeskBasic from '../ui/CabeceraDeskBasic'
-import CabeceraMovilBasic from '../ui/CabeceraMovilBasic'
-import Contenedor from '../ui/Contenedor'
 import NavButton from '../ui/NavButton'
-import logoginkgopay from '../../logoginkgopay.svg'
 import styled from 'styled-components'
 import AddCheckRepartoGasto from '../ui/AddCheckRepartoGasto'
 import DivCenterItems from '../ui/DivCenterItems'
-import DivRigthItems from '../ui/DivRigthItems'
 import AddManualRepartoGasto from '../ui/AddManualRepartoGasto'
 import ProgressBar from "../errores/ProgressBar/ProgressBar"
 import ErrorPermisos from "../errores/ErrorPermisos"
+import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 
 const GastoEditado = styled.p`
 text-transform:  uppercase;
@@ -249,15 +244,7 @@ const RepartirGasto = () => {
             {(!reparto & !gasto) ? <ProgressBar /> :
                 (toString(user_id) === toString(idCreador) || toString(user_id) === toString(admin.id) || toString(user_id) === toString(gasto.pagador_id)) ? <>
 
-                    <Breakpoint customQuery='(min-width:769px)'>
-                        <CabeceraDeskBasic></CabeceraDeskBasic>
-                    </Breakpoint>
-                    <Contenedor>
-                        <Breakpoint customQuery='(max-width:768px)'>
-                            <CabeceraMovilBasic>
-                                <img src={logoginkgopay} alt="logo Ginkgopay" />
-                            </CabeceraMovilBasic>
-                        </Breakpoint>
+                    <ContenedorOnLogin>
                         <NavButton texto='Volver al grupo' destino={`/grupos/${idGrupo}`} />
                         <GastoEditado>Reparto: {gasto.nombre}</GastoEditado>
                         <ModoNav onClick={() => { cambioTipoReparto() }}> <TextModo>{modoAvanzado ? 'REPARTO NORMAL' : 'REPARTO AVANZADO'}</TextModo></ModoNav>
@@ -271,7 +258,6 @@ const RepartirGasto = () => {
                                     participante={participante}
                                     cantidad={cantidad}
                                     onCheckParticipante={onCheckParticipante} />)}
-
 
                         {modoAvanzado &&
                             <form onSubmit={(handleSubmit(onEditarCantidad))}>
@@ -287,8 +273,6 @@ const RepartirGasto = () => {
                             </form>
                         }
 
-
-
                         {cambio &&
                             <DivCenterItems>
                                 <Aviso>{cambio}</Aviso>
@@ -303,9 +287,8 @@ const RepartirGasto = () => {
                             {(modoAvanzadoOk || !modoAvanzado) && <ButtonConfirmar color='dark' onClick={() => { confirmarReparto() }}> CONFIRMAR </ButtonConfirmar>}
                         </DivCenterItems>
 
-                    </Contenedor>
+                    </ContenedorOnLogin>
                 </>
-
                     :
                     <>
                         <NavButton texto='Volver a mis grupos' destino={'/grupos'} />

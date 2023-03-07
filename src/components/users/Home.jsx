@@ -1,12 +1,11 @@
 import { Breakpoint } from 'react-socks'
 import styled from 'styled-components'
 
-import logoginkgopay from '../../logoginkgopay.svg'
-import CabeceraDeskBasic from '../ui/CabeceraDeskBasic'
-import CabeceraMovilBasic from '../ui/CabeceraMovilBasic'
-import Contenedor from '../ui/Contenedor'
+
+import AvatarUser from '../ui/AvatarMenu/AvatarUser'
+import ContenedorNoLogin from '../ui/CabeceraContenedor/ContenedorNoLogin'
 import CustomButton from '../ui/CustomButton'
-import LoginCabecera from '../ui/LoginCabecera'
+
 
 const DivCabeceraMovil = styled.div`
 margin: 6em auto 4em;
@@ -44,15 +43,7 @@ const Home = () => {
 
     return (
         <>
-            <Breakpoint customQuery='(min-width:769px)'>
-                <CabeceraDeskBasic><LoginCabecera destino={'/login'} /></CabeceraDeskBasic>
-            </Breakpoint>
-            <Contenedor>
-                <Breakpoint customQuery='(max-width:768px)'>
-                    <CabeceraMovilBasic>
-                        <img src={logoginkgopay} alt="logo Ginkgopay" />
-                    </CabeceraMovilBasic>
-                </Breakpoint>
+           <ContenedorNoLogin>
                 <Claim>Comparte gastos</Claim>
                 <Breakpoint customQuery='(max-width:768px)'>
                     <Texto>Sin preocupaciones</Texto>
@@ -66,7 +57,8 @@ const Home = () => {
                     <CustomButton color='dark' destino={'/login'}>Acceder</CustomButton>
                     <CustomButton color='ligth' destino={'/registro'}>Crear una cuenta</CustomButton>
                 </ButtonContenedor>
-            </Contenedor>
+            </ContenedorNoLogin>
+            <AvatarUser/>
         </>
     )
 

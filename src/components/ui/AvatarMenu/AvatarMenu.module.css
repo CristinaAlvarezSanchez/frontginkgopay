@@ -1,0 +1,29 @@
+.dropdown {
+    position: relative;
+    width: 4rem;
+}
+
+.dropdownTrigger {
+    cursor: pointer;
+}
+
+.dropdownContent {
+    display: none;
+    left: -70px;
+    padding-top: 0.25rem;
+    position: absolute;
+    top: 100%;
+    background-color: #FDE8B7;
+    z-index: 9999;
+    border-radius: 10px;
+}
+
+.dropdown:hover .dropdownContent {
+    display: block;
+}
+
+.dropdownBody {
+    margin-left: 1em;
+    height: 6rem;
+    width: 8rem;
+}

@@ -5,20 +5,16 @@ import { useForm } from "react-hook-form"
 import styled from 'styled-components'
 import AddParticipanteCard from "../ui/AddParticipanteCard"
 import axios from 'axios'
-import { Breakpoint } from "react-socks"
 import UserToken from "../../utils/UserToken"
 
 import AddParcipanteSearchCard from '../ui/AddParticipanteSearchCard'
-import CabeceraDeskBasic from '../ui/CabeceraDeskBasic'
-import Contenedor from '../ui/Contenedor'
-import CabeceraMovilBasic from '../ui/CabeceraMovilBasic'
-import logoginkgopay from '../../logoginkgopay.svg'
 import personsearch from '../../icons/personsearch.png'
 import personsearchhover from '../../icons/personsearchhover.png'
 import DivCenterItems from '../ui/DivCenterItems'
 import NavButton from '../ui/NavButton'
 import ErrorPermisos from '../errores/ErrorPermisos'
 import ProgressBar from '../errores/ProgressBar/ProgressBar'
+import ContenedorOnLogin from '../ui/CabeceraContenedor/ContenedorOnLogin'
 
 
 const GrupoEditado = styled.p`
@@ -229,15 +225,7 @@ const EditarGrupo = () => {
         <>
             {arrParticipantes.length === 0 ? <ProgressBar /> :
                 (user_id === admin.id) ? <>
-                    <Breakpoint customQuery='(min-width:769px)'>
-                        <CabeceraDeskBasic></CabeceraDeskBasic>
-                    </Breakpoint>
-                    <Contenedor>
-                        <Breakpoint customQuery='(max-width:768px)'>
-                            <CabeceraMovilBasic>
-                                <img src={logoginkgopay} alt="logo Ginkgopay" />
-                            </CabeceraMovilBasic>
-                        </Breakpoint>
+                    <ContenedorOnLogin>
                         <NavButton texto='Volver al grupo' destino={`/grupos/${idGrupo}`} />
                         <GrupoEditado>Editando: "{nombreGrupo}"</GrupoEditado>
                         <DivTituloParticipantes><Titulo>Participantes actuales</Titulo></DivTituloParticipantes>
@@ -300,7 +288,7 @@ const EditarGrupo = () => {
                                     <ButtonEliminar onClick={() => { onEliminar() }}> Eliminar definitivamente </ButtonEliminar>
                                 </DivCenterItems>
                             </DivConfEliminar>}
-                    </Contenedor>
+                            </ContenedorOnLogin>
                 </>
                     :
                     <>

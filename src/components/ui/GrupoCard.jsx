@@ -15,7 +15,7 @@ const DivContainer = styled.div`
     align-items:center;
     justify-content: space-around;
     padding: 0.5em ;
-    border-bottom: 3px solid ${props => props.autorizado ? '#F6DFA7' : '#CD5220'};
+    border-bottom: 2px solid ${props => props.autorizado ? '#F6DFA7' : '#CD5220'};
     cursor: ${props => ((props.autorizado && !props.confAutorizar) || (!props.autorizado && !props.confAutorizar)) && 'pointer'} ;
     :first-child{
         border-top: 1px solid ${props => props.autorizado ? '#1D5062' : '#CD5220'};
