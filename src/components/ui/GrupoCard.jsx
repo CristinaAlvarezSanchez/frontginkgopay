@@ -89,7 +89,7 @@ const GrupoCard = (grupo) => {
 
     const navigate = useNavigate()
 
-    const {user_id} = UserToken()
+    const { user_id } = UserToken()
     const [confAutorizar, setConfAutorizar] = useState(false)
     const [autorizado, setAutorizado] = useState(grupo.autorizado)
     const [errorRes, setErrorRes] = useState('')

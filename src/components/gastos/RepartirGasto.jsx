@@ -269,7 +269,11 @@ const RepartirGasto = () => {
                                     <DivCenterItems>
                                         <Aviso>{errorSuma}</Aviso>
                                     </DivCenterItems>}
-                                <ButtonValidar type="submit">Comprobar</ButtonValidar>
+                                    {
+                                        (!modoAvanzadoOk)&&
+                                        <ButtonValidar type="submit">Comprobar</ButtonValidar>
+                                    }
+                                
                             </form>
                         }
 

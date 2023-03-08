@@ -36,9 +36,13 @@ const FooterDiv = styled.div`
     margin-top: 3rem;
     min-height: 20vh;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     padding: 3em;
     align-items: flex-end;
+    @media (min-width: 769px){
+    flex-direction:row;
+}
 `
 const FooterP = styled.div`
     font-family: 'Arimo', sans-serif;   
@@ -73,8 +77,12 @@ const ContenedorNoLogin = ({ children }) => {
                     {children}
                 </DivContenedor>
             </ContenedorBody>
-            <FooterDiv><FooterP>Gingkopay: Gestión Inteligente de Pagos</FooterP>
-                <FooterP>Copyright © 2023 | All Rights Reserved </FooterP></FooterDiv>
+            <FooterDiv>
+                <div>
+                    <FooterP>Gingkopay: Gestión Inteligente de Pagos</FooterP>
+                </div>
+                <div><FooterP>Copyright © 2023 | All Rights Reserved </FooterP></div>
+            </FooterDiv>
 
         </>
     )

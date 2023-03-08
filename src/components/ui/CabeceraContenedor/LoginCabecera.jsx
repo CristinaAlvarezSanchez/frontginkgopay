@@ -13,11 +13,11 @@ cursor: pointer;
     }
 `
 
-const LoginCabecera = ({ destino }) => {
+const LoginCabecera = () => {
     const navigate = useNavigate()
 
     return (
-        <DivContainer onClick={() => { navigate(destino) }}>
+        <DivContainer onClick={() => { navigate('/login') }}>
             <div>
                 <img style={{ height: '2em' }} src={Login} alt="" />
             </div>

@@ -8,6 +8,7 @@ import ProgressBar from '../errores/ProgressBar/ProgressBar'
 import NavButton from '../ui/NavButton'
 import ErrorPermisos from '../errores/ErrorPermisos'
 import ContenedorOnLogin from '../ui/CabeceraContenedor/ContenedorOnLogin'
+import dayjs from 'dayjs'
 
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
@@ -22,7 +23,7 @@ const NuevoGasto = () => {
     const [errorRes, setErrorRes] = useState('')
     const [permisos, setPermisos] = useState(true)
 
-console.log(user_id)
+    console.log(user_id)
     useEffect(() => {
         const fetchData = async () => {
             const participantesRes = await axios.get(`${baseUrl}/users/group/${idGrupo}`)
@@ -40,7 +41,15 @@ console.log(user_id)
         }
     }
     const onSubmit = async (values) => {
-        const res = await axios.post(`${baseUrl}/expenses/new`, values)
+        const nuevoGasto = {
+            cantidad: values.cantidad.replace(/,/, '.'),
+            fecha: values.fecha,
+            grupo_gasto_id: values.grupo_gasto_id,
+            id: values.id,
+            nombre: values.nombre,
+            pagador_id: values.pagador_id
+        }
+        const res = await axios.post(`${baseUrl}/expenses/new`, nuevoGasto)
 
         if (res.data.fatal) {
             setErrorRes(res.data.fatal)

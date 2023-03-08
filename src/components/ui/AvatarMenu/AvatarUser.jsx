@@ -22,7 +22,7 @@ const ImgAvatar = styled.div`
     background-size: cover;
     height: 100%;
     width: 100%;
-    border: 5px solid #FDE8B7;
+    border: 3px solid #FDE8B7;
 `
 const ItemMenu = styled.p`
     font-family: 'Arimo', sans-serif;
@@ -70,6 +70,9 @@ const AvatarUser = () => {
                 <div className={classes.dropdownBody}>
                     <Link to={'/editarperfil'}>
                         <ItemMenu>Editar perfil</ItemMenu>
+                    </Link>
+                    <Link to={'/mensajes/inbox'}>
+                        <ItemMenu>Ver mensajes</ItemMenu>
                     </Link>
                     <Link to={'/grupos'}>
                         <ItemMenu>Mis grupos</ItemMenu>

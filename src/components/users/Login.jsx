@@ -8,6 +8,7 @@ import { useState } from 'react'
 import CustomButton from '../ui/CustomButton'
 import { useLocalStorage } from 'react-use'
 import ContenedorNoLogin from '../ui/CabeceraContenedor/ContenedorNoLogin'
+import { useSetLoggedContext } from '../../providers/LoggedProvider'
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
@@ -16,6 +17,7 @@ const Login = () => {
     const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm()
 
+    const setIsLogged = useSetLoggedContext()
     const [token, setToken] = useLocalStorage('token')
     const [errorRes, setErrorRes] = useState('')
 
@@ -26,7 +28,7 @@ const Login = () => {
         } else {
             setErrorRes('')
             setToken(res.data.token)
-            console.log(res.data.token)
+            setIsLogged(true)
             navigate('/grupos')
         }
     }

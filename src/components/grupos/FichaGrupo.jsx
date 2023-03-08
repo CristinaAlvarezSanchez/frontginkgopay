@@ -174,7 +174,7 @@ const FichaGrupo = () => {
 
             const gastoTotalRes = await axios.get(`${baseUrl}/expenses/group/${idGrupo}`)
             setGastos(gastoTotalRes.data)
-            setGastoTotal(sumaTotal(gastoTotalRes.data))
+            setGastoTotal(sumaTotal(gastoTotalRes.data).toFixed(2))
 
             const repartoGastoRes = await axios.get(`${baseUrl}/expenses/users/${idGrupo}`)
             calcularSaldos(participantesRes.data, gastoTotalRes.data, repartoGastoRes.data)
@@ -204,7 +204,7 @@ const FichaGrupo = () => {
 
                                     <DivGasto>
                                         <GastoTotalTexto>GASTOS: {gastoTotal}€ </GastoTotalTexto>
-                                        <MiSaldoTexto> MI SALDO: {(saldos.filter(saldo => saldo.id === user_id)).map(saldo => `${saldo.saldo}€`)}</MiSaldoTexto>
+                                        <MiSaldoTexto> MI SALDO: {(saldos.filter(saldo => saldo.id === user_id)).map(saldo => `${saldo.saldo.toFixed(2)}€`)}</MiSaldoTexto>
                                     </DivGasto>
                                     <ContainerNav>
                                         <NavDivSaldos onClick={() => { setMostrarSaldos(true) }} mostrarSaldos={mostrarSaldos}>
@@ -224,7 +224,7 @@ const FichaGrupo = () => {
                                 <DivCenterItems>
                                     <CustomButton color="dark" destino={`/gastos/nuevogasto/${idGrupo}`}> Añadir gasto</CustomButton>
                                 </DivCenterItems>
-                                </ContenedorOnLogin>
+                            </ContenedorOnLogin>
                         </>
                         :
                         <>

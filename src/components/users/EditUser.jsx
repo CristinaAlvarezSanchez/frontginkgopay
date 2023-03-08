@@ -16,7 +16,7 @@ import ProgressBar from '../errores/ProgressBar/ProgressBar'
 import ErrorPermisos from '../errores/ErrorPermisos'
 
 const ButtonEliminar = styled.div`
-    background-color: #CD5220;
+    
     color: white;
     border-radius: 50px;
     border: none;

@@ -1,8 +1,13 @@
 import { Breakpoint } from "react-socks"
+import UserToken from "../../../utils/UserToken"
+import axios from "axios"
 import styled from "styled-components"
 import AvatarUser from "../../ui/AvatarMenu/AvatarUser"
 import logoginkgopay from '../../../logoginkgopay.svg'
 import { useNavigate } from "react-router-dom"
+import { Badge } from "@mui/material"
+import MailIcon from '@mui/icons-material/Mail';
+import { useEffect, useState } from "react"
 
 const ContenedorBody = styled.div`
 min-height: 70vh;
@@ -30,6 +35,15 @@ const DivLogo = styled.div`
     width: 17em;
 }
 `
+const DivAvatarAvisos = styled.div`
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+    align-items: center;
+    @media (min-width: 769px){
+    gap: 2em;
+}
+`
 const FooterDiv = styled.div`
     width: 100%;
     margin-top: 3rem;
@@ -45,9 +59,26 @@ const FooterP = styled.div`
     color:#7C8F96 ;
 
 `
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const ContenedorOnLogin = ({ children }) => {
     const navigate = useNavigate()
+    const { user_id } = UserToken()
+    const [noLeidos, setNoLeidos] = useState(0)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await axios.get(`${baseUrl}/messages/inbox/${user_id}`)
+            const mensajesNoLeidos = (res.data.filter(mensaje =>
+                mensaje.tipo === 'recibido' &&
+                mensaje.activo &&
+                !mensaje.hora_leido
+            ))
+            setNoLeidos(mensajesNoLeidos.length)
+        }
+        fetchData()
+    }, [])
+
     return (
         <>
             <ContenedorBody>
@@ -56,7 +87,18 @@ const ContenedorOnLogin = ({ children }) => {
                         <DivLogo>
                             <img onClick={() => navigate('/grupos')} src={logoginkgopay} alt="logo Ginkgopay" />
                         </DivLogo>
-                        <AvatarUser />
+                        <DivAvatarAvisos>
+                            <Badge
+                                overlap="circular"
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                badgeContent={noLeidos} color="primary"
+                            >
+                                <AvatarUser />
+                            </Badge>
+                        </DivAvatarAvisos>
                     </DivCabecera>
                 </Breakpoint>
                 <DivContenedor>
@@ -65,7 +107,12 @@ const ContenedorOnLogin = ({ children }) => {
                             <DivLogo>
                                 <img onClick={() => navigate('/grupos')} src={logoginkgopay} alt="logo Ginkgopay" />
                             </DivLogo>
-                            <AvatarUser />
+                            <DivAvatarAvisos>
+                                <Badge badgeContent={ noLeidos } color="primary">
+                                    <MailIcon color="action" />
+                                </Badge>
+                                <AvatarUser />
+                            </DivAvatarAvisos>
                         </DivCabecera>
                     </Breakpoint>
 
@@ -73,7 +120,7 @@ const ContenedorOnLogin = ({ children }) => {
                 </DivContenedor>
             </ContenedorBody>
             <FooterDiv><FooterP>Gingkopay: Gestión Inteligente de Pagos</FooterP>
-            <FooterP>Copyright © 2023 | All Rights Reserved </FooterP></FooterDiv>
+                <FooterP>Copyright © 2023 | All Rights Reserved </FooterP></FooterDiv>
 
         </>
     )

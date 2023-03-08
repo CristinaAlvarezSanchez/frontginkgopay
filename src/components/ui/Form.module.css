@@ -28,6 +28,19 @@ input {
     cursor: pointer;
 }
 
+textarea {
+    width: 100%;
+    height: 12em;
+    background-color: white;
+    border-radius: 20px;
+    border: 0;
+    padding: 1.5em;
+    margin: 1em 0;
+    font-family: 'Arimo', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+}
+
 select {
     width: 100%;
     height: 3em;
@@ -52,7 +65,7 @@ form button {
     color: white;
     border-radius: 50px;
     border: none;
-    padding: 0.8em ;
+    padding: 0.8em;
     margin-top: 1em;
     margin-bottom: 4em;
     font-size: 1.3em;
@@ -179,15 +192,16 @@ form button:hover {
     margin-right: 1em;
 }
 
-.ContainerButtonEdit{
+.ContainerButtonEdit {
     height: 2em;
 }
+
 .ButtonEdit {
     width: 10em;
     cursor: pointer;
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1em; 
-    font-weight:800;
+    font-size: 1em;
+    font-weight: 800;
     color: white;
     background-color: #CD5220;
     text-align: center;
@@ -202,6 +216,12 @@ form button:hover {
     background-color: #F6DFA7;
 }
 
+.ContainerEmail {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em
+}
 
 @media (min-width: 769px) {
     form button {

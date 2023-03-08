@@ -74,22 +74,21 @@ const MisGrupos = () => {
             {user_id ?
                 <>
                     <ContenedorOnLogin>
-                        {((arrGrupos.filter(grupo => grupo.tipo_usuario === 'administrador')).length !== 0) &&
-                            <DivTipoGrupo>
-                                <Titulo>MIS GRUPOS</Titulo>
-                                <DivIconoNuevo onClick={() => { navigate('/grupos/nuevogrupo') }} />
-                            </DivTipoGrupo>
-                        }
+                        <DivCenterItems>
+                            {(arrGrupos.length === 0) && <p>Crea un grupo para poder empezar a compartir gastos</p>}
+                        </DivCenterItems>
+                        <DivTipoGrupo>
+                            <Titulo>MIS GRUPOS</Titulo>
+                            <DivIconoNuevo onClick={() => { navigate('/grupos/nuevogrupo') }} />
+                        </DivTipoGrupo>
+
                         {(arrGrupos.filter(grupo => grupo.tipo_usuario === 'administrador')).map(grupo => (
                             <GrupoCard key={grupo.id} {...grupo} />
                         ))}
+                        <DivTipoGrupo>
+                            <Titulo>GRUPOS COMPARTIDOS CONMIGO</Titulo>
+                        </DivTipoGrupo>
 
-
-                        {((arrGrupos.filter(grupo => grupo.tipo_usuario === 'miembro' && grupo.autorizado)).length !== 0) &&
-                            <DivTipoGrupo>
-                                <Titulo>GRUPOS COMPARTIDOS CONMIGO</Titulo>
-                            </DivTipoGrupo>
-                        }
                         {(arrGrupos.filter(grupo => grupo.tipo_usuario === 'miembro' && grupo.autorizado)).map(grupo => (
                             <GrupoCard key={grupo.id} {...grupo} />
                         ))}
@@ -98,7 +97,7 @@ const MisGrupos = () => {
                         ))}
 
                         <DivCenterItems>
-                            {(arrGrupos.length === 0) && <p>Crea un grupo para poder empezar a compartir gastos</p>}
+
                             <CustomButton color='dark' destino={'/grupos/nuevogrupo'} > Crear nuevo grupo</CustomButton>
                         </DivCenterItems>
 

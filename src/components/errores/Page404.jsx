@@ -48,9 +48,9 @@ const Page404 = () => {
                 <Link to={'/login'}>
                     <TextoInicio>volver</TextoInicio>
                 </Link>
-                <divCerdo>
-                    <ImgError src={notfound404} alt="" />
-                </divCerdo>
+
+                <ImgError src={notfound404} alt="" />
+
             </DivContainer>
         </>
     )

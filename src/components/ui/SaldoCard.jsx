@@ -31,7 +31,7 @@ const SaldoCard = ({ alias, saldo }) => {
     return (
         <ContainerSaldo>
             <TextoAlias>{alias}</TextoAlias>
-            <TextoCantidad saldo={saldo}>{saldo}€</TextoCantidad>
+            <TextoCantidad saldo={saldo}>{saldo.toFixed(2)}€</TextoCantidad>
         </ContainerSaldo>
 
     )

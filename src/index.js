@@ -4,6 +4,15 @@ import './reset.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { useLocalStorage } from 'react-use';
+import axios from 'axios';
+import UserToken from './utils/UserToken';
+
+
+axios.interceptors.request.use((request) => {
+  request.headers.Authorization = JSON.parse(localStorage.getItem('token'))
+  return request /* muy importante retornar la petición  */
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
