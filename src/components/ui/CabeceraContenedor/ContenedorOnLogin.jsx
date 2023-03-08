@@ -6,7 +6,6 @@ import AvatarUser from "../../ui/AvatarMenu/AvatarUser"
 import logoginkgopay from '../../../logoginkgopay.svg'
 import { useNavigate } from "react-router-dom"
 import { Badge } from "@mui/material"
-import MailIcon from '@mui/icons-material/Mail';
 import { useEffect, useState } from "react"
 
 const ContenedorBody = styled.div`
@@ -49,15 +48,21 @@ const FooterDiv = styled.div`
     margin-top: 3rem;
     min-height: 20vh;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     padding: 3em;
-    align-items: flex-end;
+    align-items: center;
+    @media (min-width: 769px){
+    flex-direction:row;
+    justify-content: space-between;
+}
 `
 const FooterP = styled.div`
     font-family: 'Arimo', sans-serif;   
-    font-size: 1.2em;
+    font-size: 0.8em;
     color:#7C8F96 ;
-
+    margin: 5px;
+    @media (min-width: 769px){
+    font-size: 1em;}
 `
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
@@ -77,7 +82,7 @@ const ContenedorOnLogin = ({ children }) => {
             setNoLeidos(mensajesNoLeidos.length)
         }
         fetchData()
-    }, [])
+    }, [user_id])
 
     return (
         <>
@@ -108,10 +113,9 @@ const ContenedorOnLogin = ({ children }) => {
                                 <img onClick={() => navigate('/grupos')} src={logoginkgopay} alt="logo Ginkgopay" />
                             </DivLogo>
                             <DivAvatarAvisos>
-                                <Badge badgeContent={ noLeidos } color="primary">
-                                    <MailIcon color="action" />
+                                <Badge badgeContent={noLeidos} color="primary">
+                                    <AvatarUser />
                                 </Badge>
-                                <AvatarUser />
                             </DivAvatarAvisos>
                         </DivCabecera>
                     </Breakpoint>

@@ -41,17 +41,11 @@ const DivConfEliminar = styled.div`
     margin-top: 1em;  
     text-align: center;
     `
-const Aviso = styled.p`
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 300;
-    font-size: 1em; 
-    color:#1D5062;
-`
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const EditarGasto = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit } = useForm()
     const navigate = useNavigate()
 
     const { user_id } = UserToken()
@@ -67,15 +61,13 @@ const EditarGasto = () => {
     useEffect(() => {
         const fetchData = async () => {
             const gastoRes = await axios.get(`${baseUrl}/expenses/${idGasto}`)
-            console.log(gastoRes)
             setGasto(gastoRes.data)
 
             const participantesRes = await axios.get(`${baseUrl}/users/group/${gastoRes.data.grupo_gasto_id}`)
             setAdmin(participantesRes.data.filter((participante => participante.tipo_usuario === 'administrador'))[0])
         }
         fetchData()
-
-    }, [])
+    }, [idGasto])
 
     const onSubmit = async (values) => {
         const gastoModificado = {
@@ -107,10 +99,11 @@ const EditarGasto = () => {
 
     return (
         <>
-            {!gasto ? <ProgressBar /> :
-                (user_id === admin.id || user_id === gasto.pagador_id) ? <>
+            <ContenedorOnLogin>
+                {!gasto ? <ProgressBar /> :
+                    (user_id === admin.id || user_id === gasto.pagador_id) ? <>
 
-                    <ContenedorOnLogin>
+
                         <NavButton texto='Volver al grupo' destino={`/grupos/${gasto.grupo_gasto_id}`} />
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className={classes.ContainerInputEdit}>
@@ -164,13 +157,13 @@ const EditarGasto = () => {
                                     <ButtonEliminar onClick={() => { onEliminar() }}> Eliminar definitivamente </ButtonEliminar>
                                 </DivCenterItems>
                             </DivConfEliminar>}
-                    </ContenedorOnLogin>
-                </>
-                    :
-                    <>
-                        <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
-                        <ErrorPermisos />
-                    </>}
+                    </>
+                        :
+                        <>
+                            <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
+                            <ErrorPermisos />
+                        </>}
+            </ContenedorOnLogin>
         </>
     )
 }

@@ -94,8 +94,12 @@ const GrupoCard = (grupo) => {
     const [autorizado, setAutorizado] = useState(grupo.autorizado)
     const [errorRes, setErrorRes] = useState('')
 
+
     const handleClick = (autorizacion) => {
         if (autorizacion) {
+            navigate(`/grupos/${grupo.id}`)
+        }
+        else if (confAutorizar) {
             navigate(`/grupos/${grupo.id}`)
         }
         else {
@@ -108,6 +112,7 @@ const GrupoCard = (grupo) => {
         if (res.data.changedRows === 1) {
             setAutorizado(true)
             setConfAutorizar(!confAutorizar)
+
         } else {
             setErrorRes('Ha habido un error por favor intentalo de nuevo más tarde')
             console.log(errorRes)

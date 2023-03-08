@@ -1,49 +1,42 @@
 import { Breakpoint } from 'react-socks'
 import styled from 'styled-components'
-
-
-import AvatarUser from '../ui/AvatarMenu/AvatarUser'
 import ContenedorNoLogin from '../ui/CabeceraContenedor/ContenedorNoLogin'
 import CustomButton from '../ui/CustomButton'
 
 
-const DivCabeceraMovil = styled.div`
-margin: 6em auto 4em;
-width: 90%;
-`
 const Claim = styled.h1`
-color: white;
-font-family: 'Arimo', sans-serif;
-font-size: 3.5em;
-margin-bottom: 0.5em;
+    color: white;
+    font-family: 'Arimo', sans-serif;
+    font-size: 3.5em;
+    margin-bottom: 0.5em;
 `
 const Texto = styled.p`
-color: white;
-font-family: 'Source Sans Pro', sans-serif;
-font-size: 1.8em;
-margin-bottom: 1em;
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.8em;
+    margin-bottom: 1em;
 `
 const Parrafo = styled.p`
-color: #1D5062; 
-font-family: 'Source Sans Pro', sans-serif;
-font-size: 1.4em;
-margin-bottom: 1em;
+    color: #1D5062; 
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.4em;
+    margin-bottom: 1em;
 `
 const ButtonContenedor = styled.div`
-display: flex;
-flex-direction: column;
-margin-top: 2em;
-@media (min-width: 769px){
-flex-direction: row;
-justify-content: space-between;
-}
+    display: flex;
+    flex-direction: column;
+    margin-top: 2em;
+    @media (min-width: 769px){
+        flex-direction: row;
+        justify-content: space-between;
+    }
 `
 
 const Home = () => {
 
     return (
         <>
-           <ContenedorNoLogin>
+            <ContenedorNoLogin>
                 <Claim>Comparte gastos</Claim>
                 <Breakpoint customQuery='(max-width:768px)'>
                     <Texto>Sin preocupaciones</Texto>
@@ -58,7 +51,6 @@ const Home = () => {
                     <CustomButton color='ligth' destino={'/registro'}>Crear una cuenta</CustomButton>
                 </ButtonContenedor>
             </ContenedorNoLogin>
-            <AvatarUser/>
         </>
     )
 

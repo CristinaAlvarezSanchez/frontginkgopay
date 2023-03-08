@@ -13,12 +13,12 @@ import ErrorPermisos from "../errores/ErrorPermisos"
 import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 
 const GastoEditado = styled.p`
-text-transform:  uppercase;
-text-align: left;
-margin-bottom:1.5em; 
-font-family: 'Arimo', sans-serif;
-font-size: 1.5em;
-color:#1D5062;
+    text-transform:  uppercase;
+    text-align: left;
+    margin-bottom:1.5em; 
+    font-family: 'Arimo', sans-serif;
+    font-size: 1.5em;
+    color:#1D5062;
 `
 
 const DivTituloEditandoGasto = styled.div`
@@ -99,7 +99,7 @@ const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const RepartirGasto = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit } = useForm()
     const navigate = useNavigate()
     const { user_id } = UserToken()
     const { idGasto, idGrupo, idCreador } = useParams()
@@ -113,20 +113,18 @@ const RepartirGasto = () => {
     const [errorSuma, setErrorSuma] = useState()
     const [cambio, setCambio] = useState()
 
-    console.log(gasto)
     useEffect(() => {
         const fetchData = async () => {
 
             const gastoRes = await axios.get(`${baseUrl}/expenses/${idGasto}`)
             setGasto(gastoRes.data)
             setCantidad(gastoRes.data.cantidad)
-            console.log(gastoRes)
 
             const participantesRes = await axios.get(`${baseUrl}/users/group/${gastoRes.data.grupo_gasto_id}`)
             setAdmin(participantesRes.data.filter((participante => participante.tipo_usuario === 'administrador'))[0])
 
             const repartoRes = await axios.get(`${baseUrl}/expenses/infoshare/${idGasto}`)
-            repartoRes.data.map(reparto => {
+            repartoRes.data.forEach(reparto => {
                 if (parseFloat(reparto.participacion) !== 0) {
                     reparto.activo = true
                 }
@@ -137,7 +135,7 @@ const RepartirGasto = () => {
             setReparto(repartoRes.data)
         }
         fetchData()
-    }, [])
+    }, [idGasto])
 
     const onCheckParticipante = (e) => {
         setCambio()
@@ -228,7 +226,6 @@ const RepartirGasto = () => {
         } else {
             setErrorSuma('Las cantidades repartidas no coinciden con el total del gasto, revisa la información facilitada')
         }
-
     }
 
     const cambioTipoReparto = () => {
@@ -241,10 +238,10 @@ const RepartirGasto = () => {
     return (
 
         <>
-            {(!reparto & !gasto) ? <ProgressBar /> :
-                (toString(user_id) === toString(idCreador) || toString(user_id) === toString(admin.id) || toString(user_id) === toString(gasto.pagador_id)) ? <>
+            <ContenedorOnLogin>
+                {(!reparto & !gasto) ? <ProgressBar /> :
+                    (toString(user_id) === toString(idCreador) || toString(user_id) === toString(admin.id) || toString(user_id) === toString(gasto.pagador_id)) ? <>
 
-                    <ContenedorOnLogin>
                         <NavButton texto='Volver al grupo' destino={`/grupos/${idGrupo}`} />
                         <GastoEditado>Reparto: {gasto.nombre}</GastoEditado>
                         <ModoNav onClick={() => { cambioTipoReparto() }}> <TextModo>{modoAvanzado ? 'REPARTO NORMAL' : 'REPARTO AVANZADO'}</TextModo></ModoNav>
@@ -269,11 +266,11 @@ const RepartirGasto = () => {
                                     <DivCenterItems>
                                         <Aviso>{errorSuma}</Aviso>
                                     </DivCenterItems>}
-                                    {
-                                        (!modoAvanzadoOk)&&
-                                        <ButtonValidar type="submit">Comprobar</ButtonValidar>
-                                    }
-                                
+                                {
+                                    (!modoAvanzadoOk) &&
+                                    <ButtonValidar type="submit">Comprobar</ButtonValidar>
+                                }
+
                             </form>
                         }
 
@@ -291,13 +288,13 @@ const RepartirGasto = () => {
                             {(modoAvanzadoOk || !modoAvanzado) && <ButtonConfirmar color='dark' onClick={() => { confirmarReparto() }}> CONFIRMAR </ButtonConfirmar>}
                         </DivCenterItems>
 
-                    </ContenedorOnLogin>
-                </>
-                    :
-                    <>
-                        <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
-                        <ErrorPermisos />
-                    </>}
+                    </>
+                        :
+                        <>
+                            <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
+                            <ErrorPermisos />
+                        </>}
+            </ContenedorOnLogin>
         </>
 
     )

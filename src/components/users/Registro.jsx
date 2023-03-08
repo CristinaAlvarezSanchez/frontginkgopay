@@ -15,7 +15,7 @@ const baseUrl = process.env.REACT_APP_API_BASE_URL
 const Registro = () => {
 
     const navigate = useNavigate()
-    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     const [errorRes, setErrorRes] = useState('')
 
@@ -29,13 +29,12 @@ const Registro = () => {
             navigate('/login')
         }
     }
-
     const classError = (error) => {
         if (error) {
             return `${classes.LabelError}`
         }
     }
-
+    
     return (
         <>
             <ContenedorNoLogin>

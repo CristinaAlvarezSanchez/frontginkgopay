@@ -7,7 +7,6 @@ import UserToken from "../../utils/UserToken"
 import ProgressBar from "../errores/ProgressBar/ProgressBar"
 import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 import NavButton from "../ui/NavButton"
-import DivRigthItems from "../ui/DivRigthItems"
 
 const DivMensaje = styled.div`
     display: flex;
@@ -95,10 +94,9 @@ const VerMensaje = () => {
             const UserRel = participantesRes.data.filter(participante => participante.user_id === user_id)
             setHoraEnvio(UserRel[0].hora_envio)
             setTipo(UserRel[0].tipo)
-
         }
         fetchData()
-    }, [])
+    }, [mensajeId, user_id])
 
     const onEliminar = async () => {
         const res = await axios.get(`${baseUrl}/messages/users/${mensaje.id}`)
@@ -115,34 +113,31 @@ const VerMensaje = () => {
     return (
 
         <>
-            {!mensaje ? <ProgressBar /> :
+            <ContenedorOnLogin>
+                {!mensaje ? <ProgressBar /> :
+                    <>
+                        <NavButton texto='Volver a la bandeja de entrada' destino={'/mensajes/inbox'} />
+                        <DivMensaje>
+                            <DivAsunto>
+                                <AsuntoP>ASUNTO: {mensaje.titulo}</AsuntoP>
+                            </DivAsunto>
+                            <DivEnviadoa>
+                                <EnviadoaP>{(tipo === 'enviado') ? 'Enviado a' : 'Recibido de'}</EnviadoaP>
+                            </DivEnviadoa>
+                            <DivParticipante>
+                                <ParticipanteP>{participantes.filter(res => res.user_id !== user_id).map(participante => (`/ ${participante.alias} /`))}
+                                </ParticipanteP>
 
-                <ContenedorOnLogin>
-                    <NavButton texto='Volver a la bandeja de entrada' destino={'/mensajes/inbox'} />
-                    <DivMensaje>
-                        <DivAsunto>
-                            <AsuntoP>ASUNTO: {mensaje.titulo}</AsuntoP>
-                        </DivAsunto>
-                        <DivEnviadoa>
-                            <EnviadoaP>{(tipo === 'enviado') ? 'Enviado a' : 'Recibido de'}</EnviadoaP>
-                        </DivEnviadoa>
-                        <DivParticipante>
-                            <ParticipanteP>{participantes.filter(res => res.user_id !== user_id).map(participante => (`/ ${participante.alias} /`))}
-                            </ParticipanteP>
-
-                            <ParticipanteP>{dayjs(horaEnvio).format('DD-MM-YYYY')} - {dayjs(horaEnvio).format('HH:MM')}</ParticipanteP>
-                        </DivParticipante>
-                        <DivTexto>
-                            <TextoP>{mensaje.texto}</TextoP>
-                        </DivTexto>
-                    </DivMensaje>
-
-                    <Eliminar onClick={() => { onEliminar() }}>Eliminar</Eliminar>
-
-
-                </ContenedorOnLogin>
-
-            }
+                                <ParticipanteP>{dayjs(horaEnvio).format('DD-MM-YYYY')} - {dayjs(horaEnvio).format('HH:MM')}</ParticipanteP>
+                            </DivParticipante>
+                            <DivTexto>
+                                <TextoP>{mensaje.texto}</TextoP>
+                            </DivTexto>
+                        </DivMensaje>
+                        <Eliminar onClick={() => { onEliminar() }}>Eliminar</Eliminar>
+                    </>
+                }
+            </ContenedorOnLogin>
         </>
 
     )

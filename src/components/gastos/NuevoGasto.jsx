@@ -8,7 +8,6 @@ import ProgressBar from '../errores/ProgressBar/ProgressBar'
 import NavButton from '../ui/NavButton'
 import ErrorPermisos from '../errores/ErrorPermisos'
 import ContenedorOnLogin from '../ui/CabeceraContenedor/ContenedorOnLogin'
-import dayjs from 'dayjs'
 
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
@@ -23,7 +22,6 @@ const NuevoGasto = () => {
     const [errorRes, setErrorRes] = useState('')
     const [permisos, setPermisos] = useState(true)
 
-    console.log(user_id)
     useEffect(() => {
         const fetchData = async () => {
             const participantesRes = await axios.get(`${baseUrl}/users/group/${idGrupo}`)
@@ -33,7 +31,7 @@ const NuevoGasto = () => {
             if (editorIndex === -1) { setPermisos(false) }
         }
         fetchData()
-    }, [])
+    }, [idGrupo, user_id])
 
     const classError = (error) => {
         if (error) {
@@ -45,9 +43,8 @@ const NuevoGasto = () => {
             cantidad: values.cantidad.replace(/,/, '.'),
             fecha: values.fecha,
             grupo_gasto_id: values.grupo_gasto_id,
-            id: values.id,
             nombre: values.nombre,
-            pagador_id: values.pagador_id
+            usuario_id: values.usuario_id
         }
         const res = await axios.post(`${baseUrl}/expenses/new`, nuevoGasto)
 
@@ -56,8 +53,8 @@ const NuevoGasto = () => {
         } else {
             setErrorRes('')
             const arrReparto = []
-            let asignacion
-            participantes.map(participante => {
+
+            participantes.forEach(participante => {
                 arrReparto.push({
                     usuario_id: participante.id,
                     gasto_id: res.data.id,
@@ -66,19 +63,20 @@ const NuevoGasto = () => {
             })
             arrReparto.forEach(reparto => {
                 const envioData = async () => {
-                    asignacion = await axios.post(`${baseUrl}/expenses/share`, reparto)
+                    await axios.post(`${baseUrl}/expenses/share`, reparto)
                 }
                 envioData()
             });
             navigate(`/gastos/nuevogasto/${res.data.id}/repartir/${idGrupo}/${user_id}`)
         }
     }
-    console.log(participantes)
+
     return (
         <>
-            {!participantes ? <ProgressBar /> :
-                permisos ? <>
-                    <ContenedorOnLogin>
+            <ContenedorOnLogin>
+                {!participantes ? <ProgressBar /> :
+                    permisos ? <>
+
                         <NavButton texto='Volver al grupo' destino={`/grupos/${idGrupo}`} />
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className={classes.ContainerForm}>
@@ -87,10 +85,11 @@ const NuevoGasto = () => {
                                 <input type="text"
                                     className={classError(errors.nombre)}
                                     {...register('nombre', {
-                                        required: true
+                                        required: true,
+                                        maxLength: 40
                                     })} />
                                 {(errors.nombre?.type === 'required') && <p className={classes.TextoError}>Debes incluir un nombre para el gasto</p>}
-
+                                {(errors.nombre?.type === 'maxLength') && <p className={classes.TextoError}>El nombre debe tener como máximo 40 caracteres</p>}
 
                                 <label>FECHA DE GASTO</label>
                                 <input type="date"
@@ -100,8 +99,10 @@ const NuevoGasto = () => {
                                     })} />
                                 {(errors.fecha?.type === 'required') && <p className={classes.TextoError}>Debes incluir una fecha de pago</p>}
 
+
                                 <label>CANTIDAD €</label>
                                 <input
+                                    placeholder='Intruduce un numero'
                                     className={classError(errors.cantidad)}
                                     {...register('cantidad', {
                                         required: true,
@@ -133,14 +134,14 @@ const NuevoGasto = () => {
                                 </div>
                             </div>
                         </form>
-                    </ContenedorOnLogin>
 
-                </>
-                    :
-                    <>
-                        <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
-                        <ErrorPermisos />
-                    </>}
+                    </>
+                        :
+                        <>
+                            <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
+                            <ErrorPermisos />
+                        </>}
+            </ContenedorOnLogin>
         </>
     )
 }

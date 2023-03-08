@@ -3,13 +3,13 @@ import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 import UserToken from "../../utils/UserToken"
 import axios from "axios"
 import CardMensaje from "./CardMensaje"
-import dayjs from "dayjs"
 import styled from "styled-components"
 
 import mas from '../../icons/mas.png'
 import mashover from '../../icons/mashover.png'
 import NavButton from "../ui/NavButton"
 import { useNavigate } from "react-router-dom"
+import ProgressBar from "../errores/ProgressBar/ProgressBar"
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
@@ -61,41 +61,40 @@ const Inbox = () => {
             setArrMensajes(res.data)
         }
         fetchData()
-    }, [])
+    }, [user_id])
 
-    console.log(arrMensajes)
     return (
         <>
-            {arrMensajes &&
-                <ContenedorOnLogin>
+            <ContenedorOnLogin>
+                {!arrMensajes ? <ProgressBar /> :
+                    <>
+                        <NavButton texto='Enviar nuevo mensaje' destino={'/mensajes/new'} />
+                        <DivTipoMensaje>
+                            <Titulo> MENSAJES RECIBIDOS </Titulo>
+                        </DivTipoMensaje>
+                        {
+                            arrMensajes.filter(mensaje => mensaje.tipo === 'recibido' && mensaje.activo).map(mensaje => (
+                                <>
+                                    <CardMensaje key={mensaje.id} {...mensaje} user_id={user_id} />
+                                </>
+                            ))
+                        }
 
-                    <NavButton texto='Enviar nuevo mensaje' destino={'/mensajes/new'} />
-                    <DivTipoMensaje>
-                        <Titulo> MENSAJES RECIBIDOS </Titulo>
-                    </DivTipoMensaje>
-                    {
-                        arrMensajes.filter(mensaje => mensaje.tipo === 'recibido' && mensaje.activo).map(mensaje => (
-                            <>
-                                <CardMensaje key={mensaje.id} {...mensaje} user_id={user_id} />
-                            </>
-                        ))
-                    }
+                        <DivTipoMensaje>
+                            <Titulo> MENSAJES ENVIADOS </Titulo>
+                            <DivIconoNuevo onClick={() => { navigate('/mensajes/new') }} />
+                        </DivTipoMensaje>
 
-
-                    <DivTipoMensaje>
-                        <Titulo> MENSAJES ENVIADOS </Titulo>
-                        <DivIconoNuevo onClick={() => { navigate('/mensajes/new') }} />
-                    </DivTipoMensaje>
-
-                    {
-                        arrMensajes.filter(mensaje => mensaje.tipo === 'enviado' && mensaje.activo).map(mensaje => (
-                            <>
-                                <CardMensaje key={mensaje.id} {...mensaje} user_id={user_id} />
-                            </>
-                        ))
-                    }
-                </ContenedorOnLogin>
-            }
+                        {
+                            arrMensajes.filter(mensaje => mensaje.tipo === 'enviado' && mensaje.activo).map(mensaje => (
+                                <>
+                                    <CardMensaje key={mensaje.id} {...mensaje} user_id={user_id} />
+                                </>
+                            ))
+                        }
+                    </>
+                }
+            </ContenedorOnLogin>
         </>
     )
 

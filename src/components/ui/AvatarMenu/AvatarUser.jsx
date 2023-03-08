@@ -68,15 +68,16 @@ const AvatarUser = () => {
             </div>
             <div className={classes.dropdownContent}>
                 <div className={classes.dropdownBody}>
+                    <Link to={'/grupos'}>
+                        <ItemMenu>MIS GRUPOS</ItemMenu>
+                    </Link>
                     <Link to={'/editarperfil'}>
                         <ItemMenu>Editar perfil</ItemMenu>
                     </Link>
                     <Link to={'/mensajes/inbox'}>
-                        <ItemMenu>Ver mensajes</ItemMenu>
+                        <ItemMenu>Buzón de avisos</ItemMenu>
                     </Link>
-                    <Link to={'/grupos'}>
-                        <ItemMenu>Mis grupos</ItemMenu>
-                    </Link>
+
                     <ItemLogout onClick={() => { onLogOut() }}>Logout</ItemLogout>
                 </div>
             </div>

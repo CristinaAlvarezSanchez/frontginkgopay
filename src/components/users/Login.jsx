@@ -1,6 +1,5 @@
 import classes from '../ui/Form.module.css'
 import { useNavigate } from "react-router-dom"
-
 import { useForm } from "react-hook-form"
 import axios from 'axios'
 import { useState } from 'react'
@@ -64,7 +63,6 @@ const Login = () => {
                         <div className={classes.CenterItems}>
                             <button type="submit">Enviar</button>
                         </div>
-
                     </div>
                 </form>
                 <div className={classes.CenterItems}>

@@ -1,6 +1,5 @@
 import { Breakpoint } from "react-socks"
 import styled from "styled-components"
-import AvatarUser from "../../ui/AvatarMenu/AvatarUser"
 import logoginkgopay from '../../../logoginkgopay.svg'
 import { useNavigate } from "react-router-dom"
 import LoginCabecera from "./LoginCabecera"
@@ -37,18 +36,20 @@ const FooterDiv = styled.div`
     min-height: 20vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding: 3em;
-    align-items: flex-end;
+    align-items: center;
     @media (min-width: 769px){
     flex-direction:row;
+    justify-content: space-between;
 }
 `
 const FooterP = styled.div`
     font-family: 'Arimo', sans-serif;   
-    font-size: 1.2em;
+    font-size: 0.8em;
     color:#7C8F96 ;
-
+    margin: 5px;
+    @media (min-width: 769px){
+    font-size: 1em;}
 `
 
 const ContenedorNoLogin = ({ children }) => {
@@ -78,10 +79,10 @@ const ContenedorNoLogin = ({ children }) => {
                 </DivContenedor>
             </ContenedorBody>
             <FooterDiv>
-                <div>
-                    <FooterP>Gingkopay: Gestión Inteligente de Pagos</FooterP>
-                </div>
-                <div><FooterP>Copyright © 2023 | All Rights Reserved </FooterP></div>
+
+                <FooterP>Gingkopay: Gestión Inteligente de Pagos</FooterP>
+
+                <FooterP>Copyright © 2023 | All Rights Reserved </FooterP>
             </FooterDiv>
 
         </>

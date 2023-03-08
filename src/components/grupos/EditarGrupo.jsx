@@ -1,6 +1,6 @@
 import classes from '../ui/Form.module.css'
 import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import styled from 'styled-components'
 import AddParticipanteCard from "../ui/AddParticipanteCard"
@@ -15,14 +15,15 @@ import NavButton from '../ui/NavButton'
 import ErrorPermisos from '../errores/ErrorPermisos'
 import ProgressBar from '../errores/ProgressBar/ProgressBar'
 import ContenedorOnLogin from '../ui/CabeceraContenedor/ContenedorOnLogin'
+import CustomButton from '../ui/CustomButton'
 
 
 const GrupoEditado = styled.p`
-text-align: left;
-margin-bottom:1.5em; 
-font-family: 'Arimo', sans-serif;
-font-size: 1.5em;
-color:#1D5062;
+    text-align: left;
+    margin-bottom:1.5em; 
+    font-family: 'Arimo', sans-serif;
+    font-size: 1.5em;
+    color:#1D5062;
 `
 const DivBusqueda = styled.div`
     margin-bottom: 1em;
@@ -105,7 +106,8 @@ const ButtonEliminar = styled.div`
     background-color: #ee9b53;
     }
     @media(min-width: 769px) {
-        width:50%; 
+        margin-top: 6em;
+        width:45%; 
     }
     `
 const DivConfEliminar = styled.div`
@@ -154,7 +156,7 @@ const EditarGrupo = () => {
             setAdmin(participantesRes.data.filter((participante => participante.tipo_usuario === 'administrador'))[0])
         }
         fetchData()
-    }, [])
+    }, [idGrupo])
 
     const classError = (error) => {
         if (error) {
@@ -223,79 +225,86 @@ const EditarGrupo = () => {
 
     return (
         <>
-            {arrParticipantes.length === 0 ? <ProgressBar /> :
-                (user_id === admin.id) ? <>
-                    <ContenedorOnLogin>
-                        <NavButton texto='Volver al grupo' destino={`/grupos/${idGrupo}`} />
-                        <GrupoEditado>Editando: "{nombreGrupo}"</GrupoEditado>
-                        <DivTituloParticipantes><Titulo>Participantes actuales</Titulo></DivTituloParticipantes>
-                        {
-                            arrParticipantes.map(usuario => (
-                                <AddParticipanteCard
-                                    key={usuario.id}
-                                    usuario={usuario}
-                                    error={errorBorrar}
-                                    onBorrar={borrarUsuario} />
-                            ))
-                        }
-                        <TituloBusqueda>Busca participantes para añadir al grupo</TituloBusqueda>
-                        <DivBusqueda>
-                            <input type="text"
-                                value={stringBus}
-                                placeholder='Alias o email'
-                                onChange={(e) => { setStringBus(e.target.value) }} />
-                            {stringBus &&
-                                <IconBuscar onClick={() => { buscarUsuario() }} />
+            <ContenedorOnLogin>
+                {arrParticipantes.length === 0 ? <ProgressBar /> :
+                    (user_id === admin.id) ?
+                        <>
+                            <NavButton texto='Volver al grupo' destino={`/grupos/${idGrupo}`} />
+                            <GrupoEditado>Editando: "{nombreGrupo}"</GrupoEditado>
+                            <DivTituloParticipantes><Titulo>Participantes actuales</Titulo></DivTituloParticipantes>
+                            {
+                                arrParticipantes.map(usuario => (
+                                    <AddParticipanteCard
+                                        key={usuario.id}
+                                        usuario={usuario}
+                                        error={errorBorrar}
+                                        onBorrar={borrarUsuario} />
+                                ))
                             }
-                        </DivBusqueda>
-                        {
-                            arrBusqueda.map(usuario => (
-                                <AddParcipanteSearchCard
-                                    key={usuario.id}
-                                    usuario={usuario}
-                                    error={errorParticipante}
-                                    onAddUsuario={addParticipanteNew} />
-                            ))
-                        }
-                        {stringBus && <Aviso>*Recuerda que si ya tienes gastos creados para el grupo los nuevos participantes no se asginarán a los gastos antiguos.</Aviso>}
-
-                        <TituloCambioNombre>Editar el nombre del grupo</TituloCambioNombre>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <ContainerCambioNombre>
+                            <TituloBusqueda>Busca participantes para añadir al grupo</TituloBusqueda>
+                            <DivBusqueda>
                                 <input type="text"
-                                    placeholder={grupo.nombre}
-                                    className={classError(errors.nombre)}
-                                    {...register('nombre', {
-                                        required: true
-                                    })} />
-                                <button className={classes.ButtonNoMargin} type="submit">Enviar</button>
-                            </ContainerCambioNombre>
-                            {(errors.nombre?.type === 'required') && <p className={classes.TextoError}>Debes incluir un nombre para el grupo</p>}
-                            <div className={classes.CenterItems}>
-                                <p className={classes.TextoError}> {errorRes}</p>
-                            </div>
-                        </form>
+                                    value={stringBus}
+                                    placeholder='Alias o email'
+                                    onChange={(e) => { setStringBus(e.target.value) }} />
+                                {stringBus &&
+                                    <IconBuscar onClick={() => { buscarUsuario() }} />
+                                }
+                            </DivBusqueda>
+                            {
+                                arrBusqueda.map(usuario => (
+                                    <AddParcipanteSearchCard
+                                        key={usuario.id}
+                                        usuario={usuario}
+                                        error={errorParticipante}
+                                        onAddUsuario={addParticipanteNew} />
+                                ))
+                            }
+                            {stringBus && <Aviso>*Recuerda que si ya tienes gastos creados para el grupo los nuevos participantes no se asginarán a los gastos antiguos.</Aviso>}
 
-                        {!eliminar ?
                             <DivCenterItems>
-                                <ButtonEliminar onClick={() => setEliminar(true)}> Eliminar grupo </ButtonEliminar>
+                                <CustomButton color='dark' destino={`/grupos/${idGrupo}`}> Volver al grupo</CustomButton>
                             </DivCenterItems>
-                            :
-                            <DivConfEliminar>
-                                <p>¿Estas seguro de eliminar el grupo? </p>
-                                <p>El borrado será definitivo</p>
-                                <DivCenterItems>
-                                    <ButtonEliminar onClick={() => { onEliminar() }}> Eliminar definitivamente </ButtonEliminar>
-                                </DivCenterItems>
-                            </DivConfEliminar>}
-                            </ContenedorOnLogin>
-                </>
-                    :
-                    <>
-                        <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
-                        <ErrorPermisos />
-                    </>}
 
+                            <TituloCambioNombre>Editar el nombre del grupo</TituloCambioNombre>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <ContainerCambioNombre>
+                                    <input type="text"
+                                        placeholder={grupo.nombre}
+                                        className={classError(errors.nombre)}
+                                        {...register('nombre', {
+                                            required: true
+                                        })} />
+                                    <button className={classes.ButtonNoMargin} type="submit">Enviar</button>
+                                </ContainerCambioNombre>
+                                {(errors.nombre?.type === 'required') && <p className={classes.TextoError}>Debes incluir un nombre para el grupo</p>}
+                                <div className={classes.CenterItems}>
+                                    <p className={classes.TextoError}> {errorRes}</p>
+                                </div>
+                            </form>
+
+
+
+                            {!eliminar ?
+                                <DivCenterItems>
+                                    <ButtonEliminar onClick={() => setEliminar(true)}> Eliminar grupo </ButtonEliminar>
+                                </DivCenterItems>
+                                :
+                                <DivConfEliminar>
+                                    <p>¿Estas seguro de eliminar el grupo? </p>
+                                    <p>El borrado será definitivo</p>
+                                    <DivCenterItems>
+                                        <ButtonEliminar onClick={() => { onEliminar() }}> Eliminar definitivamente </ButtonEliminar>
+                                    </DivCenterItems>
+                                </DivConfEliminar>}
+                        </>
+                        :
+                        <>
+                            <NavButton texto='Volver a mis grupos' destino={'/grupos'} />
+                            <ErrorPermisos />
+                        </>}
+
+            </ContenedorOnLogin>
 
 
         </>

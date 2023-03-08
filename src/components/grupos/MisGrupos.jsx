@@ -10,8 +10,6 @@ import mas from '../../icons/mas.png'
 import mashover from '../../icons/mashover.png'
 import CustomButton from "../ui/CustomButton"
 import DivCenterItems from "../ui/DivCenterItems"
-import NavButton from "../ui/NavButton"
-import ErrorPermisos from "../errores/ErrorPermisos"
 import ProgressBar from "../errores/ProgressBar/ProgressBar"
 import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 
@@ -54,10 +52,9 @@ const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const MisGrupos = () => {
 
-    const [arrGrupos, setArrGrupos] = useState([]);
     const navigate = useNavigate()
     const { user_id } = UserToken()
-
+    const [arrGrupos, setArrGrupos] = useState([]);
 
     useEffect(() => {
         if (user_id) {
@@ -67,13 +64,14 @@ const MisGrupos = () => {
             }
             fetchData()
         }
-    }, [])
+    }, [user_id])
+
 
     return (
         <>
-            {user_id ?
-                <>
-                    <ContenedorOnLogin>
+            <ContenedorOnLogin>
+                {!arrGrupos ? <ProgressBar /> :
+                    <>
                         <DivCenterItems>
                             {(arrGrupos.length === 0) && <p>Crea un grupo para poder empezar a compartir gastos</p>}
                         </DivCenterItems>
@@ -101,15 +99,10 @@ const MisGrupos = () => {
                             <CustomButton color='dark' destino={'/grupos/nuevogrupo'} > Crear nuevo grupo</CustomButton>
                         </DivCenterItems>
 
-                    </ContenedorOnLogin>
-                </>
-                :
-                <>
-                    <NavButton texto='Login' destino={'/login'} />
-                    <ErrorPermisos />
-                </>
-            }
+                    </>
+                }
 
+            </ContenedorOnLogin>
         </>
     )
 }

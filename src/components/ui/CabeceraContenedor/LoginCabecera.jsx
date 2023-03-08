@@ -6,11 +6,15 @@ const DivContainer = styled.div`
 display: flex;
 justify-content: flex-end;
 align-items: center;
-gap: 0.5em;
+gap: 0.2em;
 cursor: pointer;
 &:hover{
         color: white;
     }
+`
+const Loginp = styled.p`
+    font-family: 'Arimo', sans-serif;   
+    font-size: 1em;
 `
 
 const LoginCabecera = () => {
@@ -21,7 +25,7 @@ const LoginCabecera = () => {
             <div>
                 <img style={{ height: '2em' }} src={Login} alt="" />
             </div>
-            <p style={{ fontSize: '1.5em' }}>Sing in</p>
+            <Loginp>Sing in</Loginp>
         </DivContainer>
     )
 

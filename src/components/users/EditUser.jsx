@@ -1,19 +1,16 @@
 import classes from '../ui/Form.module.css'
-import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 import axios from "axios"
 import styled from 'styled-components'
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { useLocalStorage } from 'react-use'
 
 import UserToken from "../../utils/UserToken"
 import DivCenterItems from '../ui/DivCenterItems'
 import DivRigthItems from '../ui/DivRigthItems'
-import CustomButton from '../ui/CustomButton'
-import NavButton from '../ui/NavButton'
 import ProgressBar from '../errores/ProgressBar/ProgressBar'
-import ErrorPermisos from '../errores/ErrorPermisos'
+import ContenedorOnLogin from "../ui/CabeceraContenedor/ContenedorOnLogin"
 
 const ButtonEliminar = styled.div`
     
@@ -52,10 +49,9 @@ const Aviso = styled.p`
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const EditUser = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit } = useForm()
     const navigate = useNavigate()
-    const [token, setToken, remove] = useLocalStorage('token')
-
+    const [token, remove] = useLocalStorage('token')
 
     const { user_id } = UserToken()
     const [user, setUser] = useState()
@@ -64,10 +60,8 @@ const EditUser = () => {
     const [editarApellidos, setEditarApellidos] = useState()
     const [editarAlias, setEditarAlias] = useState()
     const [editarEmail, setEditarEmail] = useState()
-    const [editarPassword, setEditarPassWord] = useState()
     const [errorRes, setErrorRes] = useState()
     const [eliminar, setEliminar] = useState(false)
-    const [errorEliminado, setErrorEliminado] = useState()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -76,7 +70,7 @@ const EditUser = () => {
         }
         fetchData()
 
-    }, [])
+    }, [user_id])
 
     const onSubmit = async (values) => {
         const userModificado = {
@@ -122,73 +116,73 @@ const EditUser = () => {
     }
 
     return (
-
-        user &&
         <ContenedorOnLogin>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className={classes.ContainerInputEdit}>
-                    <div className={classes.ContainerInput}>
-                        <div onClick={() => { setEditarNombre(!editarNombre) }} className={classes.DivEdit}></div>
-                        <input className={classes.InputEdit} type="text"
-                            defaultValue={user.nombre}
-                            disabled={!editarNombre ? true : false}
-                            {...register('nombre')} />
-                    </div>
-                    <label className={classes.LabelEdit}>Nombre</label>
-                </div>
+            {!user ? <ProgressBar /> :
+                <>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className={classes.ContainerInputEdit}>
+                            <div className={classes.ContainerInput}>
+                                <div onClick={() => { setEditarNombre(!editarNombre) }} className={classes.DivEdit}></div>
+                                <input className={classes.InputEdit} type="text"
+                                    defaultValue={user.nombre}
+                                    disabled={!editarNombre ? true : false}
+                                    {...register('nombre')} />
+                            </div>
+                            <label className={classes.LabelEdit}>Nombre</label>
+                        </div>
 
-                <div className={classes.ContainerInputEdit}>
-                    <div className={classes.ContainerInput}>
-                        <div onClick={() => { setEditarApellidos(!editarApellidos) }} className={classes.DivEdit}></div>
-                        <input className={classes.InputEdit} type="text"
-                            defaultValue={user.apellidos}
-                            disabled={!editarApellidos ? true : false}
-                            {...register('apellidos')} />
-                    </div>
-                    <label className={classes.LabelEdit}>Apellidos</label>
-                </div>
-                <div className={classes.ContainerInputEdit}>
-                    <div className={classes.ContainerInput}>
-                        <div onClick={() => { setEditarAlias(!editarAlias) }} className={classes.DivEdit}></div>
-                        <input className={classes.InputEdit} type="text"
-                            defaultValue={user.alias}
-                            disabled={!editarAlias ? true : false}
-                            {...register('alias')} />
-                    </div>
-                    <label className={classes.LabelEdit}>Alias</label>
-                </div>
-                <div className={classes.ContainerInputEdit}>
-                    <div className={classes.ContainerInput}>
-                        <div onClick={() => { setEditarEmail(!editarEmail) }} className={classes.DivEdit}></div>
-                        <input className={classes.InputEdit} type="text"
-                            defaultValue={user.email}
-                            disabled={!editarEmail ? true : false}
-                            {...register('email')} />
-                    </div>
-                    <label className={classes.LabelEdit}>Email</label>
-                </div>
+                        <div className={classes.ContainerInputEdit}>
+                            <div className={classes.ContainerInput}>
+                                <div onClick={() => { setEditarApellidos(!editarApellidos) }} className={classes.DivEdit}></div>
+                                <input className={classes.InputEdit} type="text"
+                                    defaultValue={user.apellidos}
+                                    disabled={!editarApellidos ? true : false}
+                                    {...register('apellidos')} />
+                            </div>
+                            <label className={classes.LabelEdit}>Apellidos</label>
+                        </div>
+                        <div className={classes.ContainerInputEdit}>
+                            <div className={classes.ContainerInput}>
+                                <div onClick={() => { setEditarAlias(!editarAlias) }} className={classes.DivEdit}></div>
+                                <input className={classes.InputEdit} type="text"
+                                    defaultValue={user.alias}
+                                    disabled={!editarAlias ? true : false}
+                                    {...register('alias')} />
+                            </div>
+                            <label className={classes.LabelEdit}>Alias</label>
+                        </div>
+                        <div className={classes.ContainerInputEdit}>
+                            <div className={classes.ContainerInput}>
+                                <div onClick={() => { setEditarEmail(!editarEmail) }} className={classes.DivEdit}></div>
+                                <input className={classes.InputEdit} type="text"
+                                    defaultValue={user.email}
+                                    disabled={!editarEmail ? true : false}
+                                    {...register('email')} />
+                            </div>
+                            <label className={classes.LabelEdit}>Email</label>
+                        </div>
 
-                <div className={classes.ContainerButtonEdit}>
-                    {(editarNombre || editarApellidos || editarEmail || editarAlias || editarPassword) &&
-                        <DivRigthItems > <button className={classes.ButtonEdit} type="submit">Modificar</button></DivRigthItems>}
-                </div>
-            </form>
-            {errorRes && <p className={classes.TextoErrorBack}> {errorRes} </p>}
+                        <div className={classes.ContainerButtonEdit}>
+                            {(editarNombre || editarApellidos || editarEmail || editarAlias) &&
+                                <DivRigthItems > <button className={classes.ButtonEdit} type="submit">Modificar</button></DivRigthItems>}
+                        </div>
+                    </form>
+                    {errorRes && <p className={classes.TextoErrorBack}> {errorRes} </p>}
 
-            {!eliminar ?
-                <DivCenterItems>
-                    <ButtonEliminar onClick={() => onComprobarEliminar()}> Eliminar usuario </ButtonEliminar>
-                </DivCenterItems>
-                :
-                <DivConfEliminar>
-                    <Aviso>¿Estas seguro de eliminar tu usuario? </Aviso>
-                    <Aviso>El borrado será definitivo</Aviso>
-                    <DivCenterItems>
-                        <ButtonEliminar onClick={() => { onEliminar() }}> Eliminar definitivamente </ButtonEliminar>
-                    </DivCenterItems>
-                </DivConfEliminar>}
-
-
+                    {!eliminar ?
+                        <DivCenterItems>
+                            <ButtonEliminar onClick={() => onComprobarEliminar()}> Eliminar usuario </ButtonEliminar>
+                        </DivCenterItems>
+                        :
+                        <DivConfEliminar>
+                            <Aviso>¿Estas seguro de eliminar tu usuario? </Aviso>
+                            <Aviso>El borrado será definitivo</Aviso>
+                            <DivCenterItems>
+                                <ButtonEliminar onClick={() => { onEliminar() }}> Eliminar definitivamente </ButtonEliminar>
+                            </DivCenterItems>
+                        </DivConfEliminar>}
+                </>
+            }
         </ContenedorOnLogin>
     )
 
