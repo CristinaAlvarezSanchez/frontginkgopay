@@ -113,7 +113,14 @@ const ContenedorOnLogin = ({ children }) => {
                                 <img onClick={() => navigate('/grupos')} src={logoginkgopay} alt="logo Ginkgopay" />
                             </DivLogo>
                             <DivAvatarAvisos>
-                                <Badge badgeContent={noLeidos} color="primary">
+                                <Badge
+                                    overlap="circular"
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
+                                    badgeContent={noLeidos} color="primary"
+                                >
                                     <AvatarUser />
                                 </Badge>
                             </DivAvatarAvisos>
